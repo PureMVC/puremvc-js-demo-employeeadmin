@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+ PureMVC Javascript – Employee Admin Demo 
+ Copyright (c) 2008 Frederic Saunier <frederic.saunier@puremvc.org>
+ Your reuse is governed by the Creative Commons Attribution 3.0 License
+-->
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title> EmployeeAdmin Javascript demo </title>
+
+		<script type="text/javascript" src="objs.js"></script>
+		<script type="text/javascript" src="puremvc.js"></script>
+
+		<!--OBJS-->
+		<script type="text/javascript" src="employee_admin_demo.js"></script>
+		<!--OBJS-->
+<style>
+
+		HTML,BODY
+		{
+			/*background-image: url('background.png');*/
+			background-color:#7E949F;
+			font-family:Arial,Helvetica,sans-serif;
+			font-size:0.9em;
+			text-align:center;
+		}
+
+		#application
+		{
+			position:absolute;
+			z-index:0;
+			top:10px;
+			left:10px;
+			width:680px;
+			height:560px;
+
+			background-color:#ABB9BF;
+		}
+
+		#userListPanel
+		{
+			position:absolute;
+			z-index:1;
+			top:10px;
+			left:10px;
+
+			padding:10px;
+			background-color:#ABB9BF;
+			width:650px;
+			height:260px;
+			text-align:center;
+			vertical-align:middle;
+		}
+
+		#userList
+		{
+			font-family: monospaced;
+			width:640px;
+			height:200px;
+		}
+
+		#userFormPanel
+		{
+			position:absolute;
+			z-index:2;
+			top:280px;
+			left:10px;
+
+			padding:10px;
+			background-color:#ABB9BF;
+			width:320px;
+			height:260px;
+			text-align:center;
+			vertical-align:middle;
+		}
+
+		#userForm
+		{
+			text-align:right;
+			background-color:#FFF;
+			width:300px;
+			height:195px;
+			margin:auto;
+			padding:5px;
+		}
+		
+		#department,
+		input
+		{
+			width:150px;
+		}
+
+		#roleListPanel
+		{
+			position:absolute;
+			z-index:3;
+			top:280px;
+			left:340px;
+
+			padding:10px;
+			background-color:#ABB9BF;
+			width:320px;
+			height:260px;
+			text-align:center;
+			vertical-align:middle;
+		}
+
+		#roleList
+		{
+			width:300px;
+			height:200px;
+		}
+		
+		#HBox
+		{
+			width:650px;
+			height:260px;
+		}
+
+		.panelTitle
+		{
+			padding-left:4px;
+			margin-bottom:2px;
+			text-align:left;
+			font-weight:bold;
+		}
+		
+		.controlBar
+		{
+			margin-top:10px;
+			text-align:center;
+		}
+
+		#userListPanel .controlBar
+		{
+			text-align:right;
+			padding-right: 1em;
+		}
+
+		#fullRoleList
+		{
+			width: 110px;
+		}
+		</style>
+
+		<script type="text/javascript">
+		<!--
+			function startup()
+			{
+				var ApplicationFacade = Objs.load('org.puremvc.js.demos.js.employeeadmin.ApplicationFacade');
+				var UserForm = Objs.load("org.puremvc.js.demos.js.employeeadmin.view.components.UserForm");
+				var UserList = Objs.load("org.puremvc.js.demos.js.employeeadmin.view.components.UserList");
+				var RolePanel = Objs.load("org.puremvc.js.demos.js.employeeadmin.view.components.RolePanel");
+
+				//Reference views in the application
+				var application = document.getElementById('application');
+				application.userForm =	new UserForm	(	document.getElementById('userForm')				);
+				application.userList =	new UserList	(	document.getElementById('userListPanel')		);
+				application.rolePanel =	new RolePanel	(	document.getElementById('roleListPanel')		);
+
+				var facade = ApplicationFacade.getInstance();
+				facade.startup(application);
+			}
+		//-->
+		</script>
+
+	</head>
+
+	<body onload="startup()">
+		<div id="application">
+
+			<div id="userListPanel">
+				<div class="panelTitle">Users</div>
+				<select id="userList" multiple></select>
+
+				<!-- User List Controls -->
+				<div class="controlBar">
+
+					<!-- Update/Add User Button -->
+					<button id="deleteButton">Delete </button>
+
+					<!-- Cancel Button -->
+					<button id="newButton">Add</button>
+
+				</div>
+			</div>
+
+			<div id="roleListPanel">
+				<div class="panelTitle">User Roles</div>
+				<select id="roleList" multiple></select>
+				
+				<!-- User Role Controls -->
+				<div class="controlBar">
+
+					<!-- Full role list -->
+					<select id="fullRoleList"></select>
+
+					<!-- Update/Add User Button -->
+					<button id="addRoleButton">Add role</button>
+
+					<!-- Cancel Button -->
+					<button id="removeRoleButton">Remove role</button>
+
+				</div>
+			</div>
+
+			<div id="userFormPanel">
+				<div class="panelTitle">User Profile</div>
+				<div id="userForm">
+
+					<!-- First Name-->
+					<label for="firstname">First Name</label>
+					<input type="text" id="firstname" value="" />
+
+					<br/ >
+
+					<!-- Last Name -->
+					<label for="lastname">Last Name</label>
+					<input type="text" id="lastname" value="" />
+
+					<br/ >
+
+					<!-- Email -->
+					<label for="email">Email</label>
+					<input type="text" id="email" value="" />
+
+					<br/ >
+
+					<!-- Username -->
+					<label for="username">Username</label>
+					<input type="text" id="username" value="" />
+
+					<br/ >
+
+					<!-- Password -->
+					<label for="password">Password</label>
+					<input type="password" id="password" value=""/>
+
+					<br/ >
+
+					<!-- Confirm Password -->
+					<label for="confirm">Confirm Password</label>
+					<input type="password" id="confirm" value="" />
+
+					<br/ >
+
+					<!-- Department Combo -->
+					<label for="department">Department</label>
+					<select id="department"></select>
+				</div>
+
+				<!-- User Profile Controls -->
+				<div class="controlBar">
+
+					<!-- Update/Add User Button -->
+					<button id="submitButton">Add User</button>
+
+					<!-- Cancel Button -->
+					<button id="cancelButton">Cancel</button>
+
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
