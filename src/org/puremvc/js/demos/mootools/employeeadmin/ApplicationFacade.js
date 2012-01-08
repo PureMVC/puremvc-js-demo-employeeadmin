@@ -1,45 +1,22 @@
 /*
- PureMVC Javascript Employee Admin Demo for Mootools by Frederic Saunier <frederic.saunier@puremvc.org> 
- PureMVC - Copyright(c) 2006-10 Futurescale, Inc., Some rights reserved. 
+ PureMVC Javascript Employee Admin Demo for JS Native by Cliff Hall<cliff.hall@puremvc.org> 
+ Ported from Demo for Mootools by Frederic Saunier <frederic.saunier@puremvc.org> 
+ PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved. 
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
+var ApplicationFacade = function(){}
 
-var ApplicationFacade = function()
+/* subclass Facade */
+ApplicationFacade.prototype = new Facade();
+ApplicationFacade.prototype.constructor = ApplicationFacade;
+
+/**
+ * Start the application
+ */
+ApplicationFacade.prototype.startup = function( app/*Object*/ )
 {
-	/**
-	 * Required by MooTools for inheritance.
-	 * @type Class
-	 */
-	this.Extends = new Class(new Facade());
-
-	/**
-	 * Start the application
-	 */
-	this.startup = function( app/*Object*/ )
-	{
-		this.sendNotification( ApplicationFacade.STARTUP, app );	
-	}
-
-	/**
-	 * The <code>Model</code> <code>View</code> and
-	 * <code>Controller</code> are initialized in a deliberate
-	 * order to ensure internal dependencies are satisfied before
-	 * operations are performed.<p>
-	 * <code>initializeController()</code> should be overridden
-	 * for the specific purpose of registering your commands. Any attempt to
-	 * register <code>Mediator</code>s here will result in an error.
-	 * being thrown because the View has not yet been initialized.</p>
-	 * <p>calling <code>this.parent()</code> is also required.
-	 */
-	this.initializeController = function() 
-	{
-		// Always call this.parent()
-		this.parent();
-
-		this.registerCommand( ApplicationFacade.STARTUP, StartupCommand );
-		this.registerCommand( ApplicationFacade.DELETE_USER, DeleteUserCommand );
-		this.registerCommand( ApplicationFacade.ADD_ROLE_RESULT, AddRoleResultCommand );
-	}
+	this.registerCommand( ApplicationFacade.STARTUP, StartupCommand );
+	this.sendNotification( ApplicationFacade.STARTUP, app );	
 }
 
 // Notification name constants
