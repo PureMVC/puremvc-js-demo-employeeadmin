@@ -4,17 +4,14 @@
  PureMVC - Copyright(c) 2006-12 Futurescale, Inc., Some rights reserved. 
  Your reuse is governed by the Creative Commons Attribution 3.0 License
 */
-var PrepViewCommand = function(){}
+var PrepControllerCommand = function(){}
 
 /* subclass SimpleCommand */
-PrepViewCommand.prototype = new SimpleCommand();
-PrepViewCommand.prototype.constructor = PrepViewCommand;
+PrepControllerCommand.prototype = new SimpleCommand();
+PrepControllerCommand.prototype.constructor = PrepControllerCommand;
 
 PrepViewCommand.prototype.execute = function( note/*Notification*/ )
 {
-	var app/*Application*/ = note.getBody();
-
-	this.facade.registerMediator( new UserFormMediator( app.userForm ) );
-	this.facade.registerMediator( new UserListMediator( app.userList ) );
-	this.facade.registerMediator( new RolePanelMediator( app.rolePanel ) );
+	this.facade.registerCommand( ApplicationFacade.DELETE_USER, DeleteUserCommand );
+	this.facade.registerCommand( ApplicationFacade.ADD_ROLE_RESULT, AddRoleResultCommand );
 }
