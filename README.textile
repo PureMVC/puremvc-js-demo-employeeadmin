@@ -1,13 +1,15 @@
 h2. PureMVC Port to Javascript / Objs / jQuery EmployeeAdmin Demo
 
-PureMVC - Copyright(c) 2006-2012 Futurescale, Inc., Some rights reserved.
 PureMVC Port to Javascript / Objs by Frederic Saunier
-Objs - 2006-2011 Frederic Saunier
+PureMVC - Copyright(c) 2006-2012 Futurescale, Inc., Some rights reserved.
+Objs - Copyright(c) 2006-2012 Frederic Saunier
+jQuery - Copyright 2011, John Resig
+Copyright 2011, AUTHORS.txt (http://jqueryui.com/about)
 --------------------------------------------------------------------------
-Release Date: 02/20/11
+Release Date: 01/08/12
 Platform: JavaScript / Objs
 Version: 1
-Revision: 0
+Revision: 1
 Author: Frederic Saunier <frederic.saunier@puremvc.org>
 License: Creative Commons Attribution 3.0 United States License
 License for Prototype Core: MIT and CC BY-SA
@@ -15,11 +17,10 @@ License for Prototype Core: MIT and CC BY-SA
 
 h2. Releases
 
-h3. Version 1.0
+h3. Version 1.1
 
 This demo is inspired originally from PureMVC Employee Admin for AS3 standard
-port and PureMVC Employee Admin demo for Objective C respectively by Cliff Hall
-and Brian Knorr.
+port and PureMVC Employee Admin demo for Mootools I made.
 
 Unit Tests follow the PureMVC for AS3 standard port with some specific
 additions for the JavaScript language.
