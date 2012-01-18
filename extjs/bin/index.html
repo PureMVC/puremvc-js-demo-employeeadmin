@@ -17,9 +17,10 @@
   <script type="text/javascript" src="js/ext-base-debug.js"></script>
   <script type="text/javascript" src="js/ext-all-debug.js"></script>
 
-  <script type="text/javascript" src="js/PureMVC_JS_ExtJS_2_0.js"></script>
-  <script type="text/javascript" src="js/Utility_ExtJS_AsyncCommand.js"></script>
-  <script type="text/javascript" src="js/employee_admin_demo_extjs_Mini.js"></script>
+  <script type="text/javascript" src="js/PureMVC_JS_MultiCore_1_0.js"></script>
+  <script type="text/javascript" src="js/PureMVC_JS_ExtJS_3_adapter.js"></script>
+  <script type="text/javascript" src="js/Utility_ExtJS_Multicore_AsyncCommand.js"></script>
+  <script type="text/javascript" src="js/employee_admin_demo_extjs.js"></script>
 
   <script type="text/javascript">
     Ext.BLANK_IMAGE_URL = 'images/default/s.gif';
@@ -31,7 +32,7 @@
       Ext.QuickTips.init();
 
       // Start up the EmployeeAdmin application.
-      Puremvc.demo.ApplicationFacade.getInstance().startup();
+      Puremvc.demo.ApplicationFacade.getInstance("EmployeeAdminDemo").startup();
     });
   </script>
 </head>

@@ -1,3 +1,10 @@
+/*
+ PureMVC Javascript AsyncCommand Utility for ExtJS port
+ by Tony DeFusco <tony.defusco@puremvc.org>
+ PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved.
+ Your reuse is governed by the Creative Commons Attribution 3.0 License
+ */
+
 /**
  * @lends Puremvc.patterns.AsyncCommand.prototype
  */
@@ -11,7 +18,7 @@ Puremvc.patterns.AsyncCommand = Ext.extend(Puremvc.patterns.SimpleCommand, {
 
   /**
    * @extends Puremvc.patterns.SimpleCommand
-   * @class A base <code>AsyncCommand</code> implementation.
+   * @class <P>A base <code>AsyncCommand</code> implementation.</P>
    *
    * <P>
    * Your subclass should override the <code>execute</code>
@@ -33,7 +40,7 @@ Puremvc.patterns.AsyncCommand = Ext.extend(Puremvc.patterns.SimpleCommand, {
    *
    * @param {Function} value The <code>AsyncMacroCommand</code> method to call on completion.
    */
-  setOnComplete: function(value/*function*/) {
+  setOnComplete: function(value/*Function*/) {
     this.onComplete = value;
   },
 
@@ -44,9 +51,19 @@ Puremvc.patterns.AsyncCommand = Ext.extend(Puremvc.patterns.SimpleCommand, {
    * has finished.
    */
   commandComplete: function() {
-    this.onComplete();
+    if (Ext.isFunction(this.onComplete)) {
+      this.onComplete();
+    }
   }
 });
+
+/*
+ PureMVC Javascript AsyncCommand Utility for ExtJS port
+ by Tony DeFusco <tony.defusco@puremvc.org>
+ PureMVC - Copyright(c) 2006-11 Futurescale, Inc., Some rights reserved.
+ Your reuse is governed by the Creative Commons Attribution 3.0 License
+ */
+
 /**
  * @lends Puremvc.patterns.AsyncMacroCommand.prototype
  */
@@ -122,6 +139,7 @@ Puremvc.patterns.AsyncMacroCommand = Ext.extend(Puremvc.patterns.Notifier, {
    */
   constructor: function() {
     Puremvc.patterns.AsyncMacroCommand.superclass.constructor.call(this);
+    this.isAsyncCommand = true;
     this.subCommands = new Array();
     this.initializeAsyncMacroCommand();
   },
@@ -205,7 +223,7 @@ Puremvc.patterns.AsyncMacroCommand = Ext.extend(Puremvc.patterns.Notifier, {
       if (isAsync) {
         commandInstance.setOnComplete(this.nextCommand.createDelegate(this));
       }
-
+      commandInstance.initializeNotifier(this.multitonKey);
       commandInstance.execute(this.notification);
 
       if (!isAsync) {
@@ -222,3 +240,4 @@ Puremvc.patterns.AsyncMacroCommand = Ext.extend(Puremvc.patterns.Notifier, {
     }
   }
 });
+
