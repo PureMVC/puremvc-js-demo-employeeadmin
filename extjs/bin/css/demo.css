@@ -1,0 +1,28 @@
+HTML, BODY {
+  background-color: #8CA4DB;
+}
+
+.x-list-selected {
+  background-color: #B1BFDE;
+}
+
+.application-name {
+  color: #0559CC;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.application-category {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.required {
+  background-image: url("../images/demo/required_field.gif");
+  background-repeat: no-repeat;
+  background-attachment: relative;
+  background-position: 35% 50%;
+}

@@ -1,0 +1,77 @@
+<project name="PureMVC_ExtJS" basedir=".." default="default">
+  <property name="output-dir" value="${basedir}/bin/js"/>
+  <property name="output-file" value="employee_admin_demo_extjs.js"/>
+  
+  <target name="default" depends="cleanup, minify"/>
+
+  <target name="cleanup" description="Remove any previously generated artifacts.">
+    <delete failonerror="false">
+      <fileset dir="${output-dir}" includes="employee_admin_demo_extjs*.js"/>
+    </delete>
+    <mkdir dir="${output-dir}"/>
+  </target>
+
+  <target name="concat" description="Concatenate javascript source files into a single library file.">
+    <concat
+        destfile="${output-dir}/${output-file}"
+        append="no"
+        encoding="UTF-8"
+        outputencoding="UTF-8"
+        fixlastline="true"
+        >
+      <!--
+        We need to respect an order for class declaration in ExtJS
+        to allow classes to inherit from their dependencies.  Thus,
+        each file is specified here individually in sequential order.
+      -->
+      <path>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/ApplicationFacade.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/common/Util.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/controller/AddRoleResultCommand.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/controller/DeleteUserCommand.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/controller/PrepControllerCommand.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/controller/PrepModelCommand.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/controller/PrepViewCommand.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/controller/StartupCommand.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/model/vo/RoleVO.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/model/vo/UserVO.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/model/DeptEnum.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/model/RoleEnum.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/model/RoleProxy.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/model/UserProxy.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/view/components/Application.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/view/components/RolePanel.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/view/components/UserForm.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/view/components/UserList.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/view/ApplicationMediator.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/view/RolePanelMediator.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/view/UserFormMediator.js"/>
+        <pathelement location="${basedir}/src/org/puremvc/js/demos/extjs/employeeadmin/view/UserListMediator.js"/>
+      </path>
+    </concat>      
+  </target>
+  
+  <target name="minify" description="Minify a set of files" depends="concat">
+    <taskdef name="yuicompress" classname="com.yahoo.platform.yui.compressor.YUICompressTask">
+      <classpath>
+        <pathelement path="${basedir}/build/lib/yuicompressor-2.4.2.jar" />
+        <pathelement path="${basedir}/build/lib/yuiant.jar" />
+      </classpath>
+    </taskdef>
+
+    <yuicompress
+        charset="UTF-8"
+        linebreak="80"
+        warn="false"
+        munge="no"
+        preserveallsemicolons="true"
+        preservestringlitterals="true"
+        outputfolder="${output-dir}"
+        outputsuffix="_Mini"
+        >
+      <fileset dir="${output-dir}">
+        <include name="${output-file}"/>
+      </fileset>
+    </yuicompress>
+  </target>
+</project>
