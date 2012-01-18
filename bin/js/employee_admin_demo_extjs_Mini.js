@@ -1,9 +1,9 @@
-Ext.ns("Puremvc.demo");Puremvc.demo.ApplicationFacade=Ext.extend(Puremvc.patterns.Facade,{constructor:function(){Puremvc.demo.ApplicationFacade.superclass.constructor.call(this);
+Ext.ns("Puremvc.demo");Puremvc.demo.ApplicationFacade=Ext.extend(Puremvc.patterns.Facade,{constructor:function(key){Puremvc.demo.ApplicationFacade.superclass.constructor.call(this,key);
 },startup:function(viewComponent){this.sendNotification(Puremvc.demo.ApplicationFacade.STARTUP,viewComponent);
 },initializeController:function(){Puremvc.demo.ApplicationFacade.superclass.initializeController.call(this);
 this.registerCommand(Puremvc.demo.ApplicationFacade.STARTUP,Puremvc.demo.controller.StartupCommand);
-}});Ext.apply(Puremvc.demo.ApplicationFacade,{STARTUP:"Startup",NEW_USER:"newUser",DELETE_USER:"deleteUser",CANCEL_SELECTED:"cancelSelected",USER_SELECTED:"userSelected",USER_ADDED:"userAdded",USER_UPDATED:"userUpdated",USER_DELETED:"userDeleted",ADD_ROLE:"addRole",ADD_ROLE_RESULT:"addRoleResult",getInstance:function(){if(Puremvc.patterns.Facade._instance==undefined){Puremvc.patterns.Facade._instance=new Puremvc.demo.ApplicationFacade();
-}return Puremvc.patterns.Facade._instance;}});Ext.namespace("Puremvc.demo.common");
+}});Ext.apply(Puremvc.demo.ApplicationFacade,{STARTUP:"Startup",NEW_USER:"newUser",DELETE_USER:"deleteUser",CANCEL_SELECTED:"cancelSelected",USER_SELECTED:"userSelected",USER_ADDED:"userAdded",USER_UPDATED:"userUpdated",USER_DELETED:"userDeleted",ADD_ROLE:"addRole",ADD_ROLE_RESULT:"addRoleResult",getInstance:function(key){if(!Puremvc.patterns.Facade.hasCore(key)){new Puremvc.demo.ApplicationFacade(key);
+}var retVal=Puremvc.patterns.Facade.getInstance(key);return retVal;}});Ext.namespace("Puremvc.demo.common");
 Puremvc.demo.common.Util={alert:function(message,title){Ext.Msg.show({title:title,msg:message,buttons:Ext.MessageBox.OK,icon:Ext.MessageBox.INFO});
 }};Ext.ns("Puremvc.demo.controller");Puremvc.demo.controller.AddRoleResultCommand=Ext.extend(Puremvc.patterns.AsyncCommand,{execute:function(notification){var result=notification.getBody();
 if(result===false){Puremvc.demo.common.Util.alert("Role already exists for this user!","Add User Role");

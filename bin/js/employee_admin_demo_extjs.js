@@ -37,12 +37,14 @@ Puremvc.demo.ApplicationFacade = Ext.extend(Puremvc.patterns.Facade,
    * </p>
    * @extends Puremvc.patterns.Facade
    *
+   * @param {string} key The multiton key.
+   *
    * @author Tony DeFusco
    *
    * @constructs
    */
-  constructor: function() {
-    Puremvc.demo.ApplicationFacade.superclass.constructor.call(this);
+  constructor: function(key /* string */) {
+    Puremvc.demo.ApplicationFacade.superclass.constructor.call(this, key);
   },
 
   /**
@@ -162,14 +164,17 @@ Ext.apply(Puremvc.demo.ApplicationFacade, {
    * Your Singleton implementation is up to you.  This provides an example
    * that is compatible with JSDoc and most editors' code assistance.
    *
+   * @param {string} key The multiton key.
+   *
    * @return {Puremvc.demo.ApplicationFacade} the <code>Facade</code> subclass instance
    * used throughout the application.
    */
-  getInstance: function() {
-    if (Puremvc.patterns.Facade._instance == undefined) {
-      Puremvc.patterns.Facade._instance = new Puremvc.demo.ApplicationFacade();
+  getInstance: function(key /* string */) {
+    if (!Puremvc.patterns.Facade.hasCore(key)) {
+      new Puremvc.demo.ApplicationFacade(key);
     }
-    return Puremvc.patterns.Facade._instance;
+    var retVal = Puremvc.patterns.Facade.getInstance(key);
+    return retVal;
   }
 });
 /*
