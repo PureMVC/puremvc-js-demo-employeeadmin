@@ -7,30 +7,34 @@
     org.puremvc.js.multicore.patterns.command.MacroCommand,
     org.puremvc.js.multicore.patterns.command.SimpleCommand,
     org.puremvc.js.multicore.patterns.mediator.Mediator,
-    org.puremvc.js.multicore.patterns.proxy.Proxy
+    org.puremvc.js.multicore.patterns.proxy.Proxy,
+    org.puremvc.js.multicore.patterns.command.AsyncMacroCommand,
+    org.puremvc.js.multicore.patterns.command.AsyncCommand
   ];
   for (var i = 0; i < _classes.length; ++i) {
     var _class = _classes[i];
     
-    if (_class.prototype.constructor == null) {
-      _class.prototype.constructor = _class;
-    }
-    
-    _class.superclass = org.puremvc.js.multicore.patterns.observer.Notifier.prototype;
-    _class.override = function(o) {
-      Ext.override(_class, o);
-    };
-    _class.prototype.superclass = _class.prototype.supr = (function() {
-      return org.puremvc.js.multicore.patterns.observer.Notifier.prototype;
-    });
-    _class.prototype.override = function(o) {
-      for (var m in o) {
-        this[m] = o[m];
+    if (_class) {
+      if (_class.prototype.constructor == null) {
+        _class.prototype.constructor = _class;
       }
-    };
-    _class.extend = function(o) {
-      return Ext.extend(_class, o);
-    };
+    
+      _class.superclass = org.puremvc.js.multicore.patterns.observer.Notifier.prototype;
+      _class.override = function(o) {
+        Ext.override(_class, o);
+      };
+      _class.prototype.superclass = _class.prototype.supr = (function() {
+        return org.puremvc.js.multicore.patterns.observer.Notifier.prototype;
+      });
+      _class.prototype.override = function(o) {
+        for (var m in o) {
+          this[m] = o[m];
+        }
+      };
+      _class.extend = function(o) {
+        return Ext.extend(_class, o);
+      };
+    }
   }
   
   // Create aliases using shorter namespaces (for backward compatibility)
@@ -46,4 +50,12 @@
   Puremvc.patterns.Notifier = org.puremvc.js.multicore.patterns.observer.Notifier;
   Puremvc.patterns.Observer = org.puremvc.js.multicore.patterns.observer.Observer;
   Puremvc.patterns.Proxy = org.puremvc.js.multicore.patterns.proxy.Proxy;
+  
+  // Create aliases for AsyncCommand classes (if applicable)
+  if (org.puremvc.js.multicore.patterns.command.AsyncMacroCommand) {
+    Puremvc.patterns.AsyncMacroCommand = org.puremvc.js.multicore.patterns.command.AsyncMacroCommand;
+  }
+  if (org.puremvc.js.multicore.patterns.command.AsyncCommand) {
+    Puremvc.patterns.AsyncCommand = org.puremvc.js.multicore.patterns.command.AsyncCommand;
+  }
 })();
