@@ -1,61 +1,35 @@
+/**
+ * @fileOverview
+ * Adapter to preserve backward compatibility with existing applications
+ * coded with the ExtJS port of PureMVC.  Preserves backward compatibility by
+ * mapping PureMVC classes to shorter ExtJS-style namespaces.
+ * @author Tony DeFusco | tony.defusco@puremvc.org
+ */
 (function(){
-  /**
-   * Augment all of the sub-classed PureMVC classes to work with the
-   * simulated class inheritance mechanism employed by ExtJS.
-   */
-  var _classes = [ 
-    org.puremvc.js.multicore.patterns.command.MacroCommand,
-    org.puremvc.js.multicore.patterns.command.SimpleCommand,
-    org.puremvc.js.multicore.patterns.mediator.Mediator,
-    org.puremvc.js.multicore.patterns.proxy.Proxy,
-    org.puremvc.js.multicore.patterns.command.AsyncMacroCommand,
-    org.puremvc.js.multicore.patterns.command.AsyncCommand
-  ];
-  for (var i = 0; i < _classes.length; ++i) {
-    var _class = _classes[i];
-    
-    if (_class) {
-      if (_class.prototype.constructor == null) {
-        _class.prototype.constructor = _class;
-      }
-    
-      _class.superclass = org.puremvc.js.multicore.patterns.observer.Notifier.prototype;
-      _class.override = function(o) {
-        Ext.override(_class, o);
-      };
-      _class.prototype.superclass = _class.prototype.supr = (function() {
-        return org.puremvc.js.multicore.patterns.observer.Notifier.prototype;
-      });
-      _class.prototype.override = function(o) {
-        for (var m in o) {
-          this[m] = o[m];
-        }
-      };
-      _class.extend = function(o) {
-        return Ext.extend(_class, o);
-      };
-    }
-  }
-  
   // Create aliases using shorter namespaces (for backward compatibility)
   Ext.namespace('Puremvc.core', 'Puremvc.patterns');
-  Puremvc.core.Controller = org.puremvc.js.multicore.core.Controller;
-  Puremvc.core.Model = org.puremvc.js.multicore.core.Model;
-  Puremvc.core.View = org.puremvc.js.multicore.core.View;
-  Puremvc.patterns.Facade = org.puremvc.js.multicore.patterns.facade.Facade;
-  Puremvc.patterns.MacroCommand = org.puremvc.js.multicore.patterns.command.MacroCommand;
-  Puremvc.patterns.Mediator = org.puremvc.js.multicore.patterns.mediator.Mediator;
-  Puremvc.patterns.SimpleCommand = org.puremvc.js.multicore.patterns.command.SimpleCommand;
-  Puremvc.patterns.Notification = org.puremvc.js.multicore.patterns.observer.Notification;
-  Puremvc.patterns.Notifier = org.puremvc.js.multicore.patterns.observer.Notifier;
-  Puremvc.patterns.Observer = org.puremvc.js.multicore.patterns.observer.Observer;
-  Puremvc.patterns.Proxy = org.puremvc.js.multicore.patterns.proxy.Proxy;
-  
-  // Create aliases for AsyncCommand classes (if applicable)
-  if (org.puremvc.js.multicore.patterns.command.AsyncMacroCommand) {
-    Puremvc.patterns.AsyncMacroCommand = org.puremvc.js.multicore.patterns.command.AsyncMacroCommand;
-  }
-  if (org.puremvc.js.multicore.patterns.command.AsyncCommand) {
-    Puremvc.patterns.AsyncCommand = org.puremvc.js.multicore.patterns.command.AsyncCommand;
-  }
+  var aliases = [
+    // object path (namespace), alias (class name), ref to original class object
+    [Puremvc.core, "Controller", org.puremvc.js.multicore.core.Controller],
+    [Puremvc.core, "Model", org.puremvc.js.multicore.core.Model],
+    [Puremvc.core, "View", org.puremvc.js.multicore.core.View],
+    [Puremvc.patterns, "AsyncMacroCommand", org.puremvc.js.multicore.patterns.command.AsyncMacroCommand],
+    [Puremvc.patterns, "AsyncCommand", org.puremvc.js.multicore.patterns.command.AsyncCommand],
+    [Puremvc.patterns, "Facade", org.puremvc.js.multicore.patterns.facade.Facade],
+    [Puremvc.patterns, "MacroCommand", org.puremvc.js.multicore.patterns.command.MacroCommand],
+    [Puremvc.patterns, "Mediator", org.puremvc.js.multicore.patterns.mediator.Mediator],
+    [Puremvc.patterns, "SimpleCommand", org.puremvc.js.multicore.patterns.command.SimpleCommand],
+    [Puremvc.patterns, "Notification", org.puremvc.js.multicore.patterns.observer.Notification],
+    [Puremvc.patterns, "Notifier", org.puremvc.js.multicore.patterns.observer.Notifier],
+    [Puremvc.patterns, "Observer", org.puremvc.js.multicore.patterns.observer.Observer],
+    [Puremvc.patterns, "Proxy", org.puremvc.js.multicore.patterns.proxy.Proxy]
+  ];
+  Ext.each(aliases, function(item, index, allItems) {
+    var path = item[0];
+    var alias = item[1];
+    var target = item[2];
+    if (path && alias && target) {
+      path[alias] = target;
+    }
+  }, this);
 })();
