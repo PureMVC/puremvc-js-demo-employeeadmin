@@ -1,0 +1,19 @@
+.application-name {
+  color: #0559CC;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  font-weight: normal;
+}
+
+.application-category {
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.required {
+  background-image: url("../themes/images/demo/required_field.gif");
+  background-repeat: no-repeat;
+  background-position: right;
+}
