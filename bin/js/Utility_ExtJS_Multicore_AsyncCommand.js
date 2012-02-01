@@ -7,12 +7,11 @@
 	
 	// create the org.puremvc.js object hierarchy
 	// if the hierarchy does not yet exist
-	if (null == scope["puremvc"])
+	if (null == scope['puremvc'])
 	{
-		scope["puremvc"]= {};
+		scope['puremvc']= {};
 	}
-
-
+	
  	/* implementation begin */
 	
 	
@@ -193,7 +192,8 @@ AsyncMacroCommand.prototype.addSubCommand = function(commandClassRef/*Class*/) {
  * @param {Function} value The #AsyncMacroCommand method to call on completion.
  */
 AsyncMacroCommand.prototype.setOnComplete = function(value /*Function*/) {
-  this.onComplete = Ext.bind(value, this);
+  var me = this;
+  this.onComplete = function(){return value.apply(me);};
 };
 
 /**
@@ -222,7 +222,8 @@ AsyncMacroCommand.prototype.nextCommand = function() {
     var isAsync/*Boolean*/ = commandInstance.isAsyncCommand;
 
     if (isAsync) {
-      commandInstance.setOnComplete(Ext.bind(this.nextCommand, this));
+      var me = this;
+      commandInstance.setOnComplete(function(){return me.nextCommand.apply(me, arguments);});
     }
     commandInstance.initializeNotifier(this.multitonKey);
     commandInstance.execute(this.notification);
@@ -247,11 +248,11 @@ AsyncMacroCommand.prototype.nextCommand = function() {
 	// export the AsyncCommand utility classes to the
 	// org.puremvc.js.multicore.patterns.command namespace
 	var _classes = {
-    "AsyncCommand": AsyncCommand,
-    "AsyncMacroCommand": AsyncMacroCommand
+    'AsyncCommand': AsyncCommand,
+    'AsyncMacroCommand': AsyncMacroCommand
   };
   for (var _class in _classes) {
-	  scope["puremvc"][_class] = _classes[_class];
+	  scope['puremvc'][_class] = _classes[_class];
   }
 })(this); // the 'this' parameter will resolve to global scope in all environments
 
