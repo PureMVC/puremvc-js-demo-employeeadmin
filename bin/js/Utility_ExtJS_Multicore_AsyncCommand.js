@@ -7,24 +7,9 @@
 	
 	// create the org.puremvc.js object hierarchy
 	// if the hierarchy does not yet exist
-	if (null == scope['org'])
+	if (null == scope['puremvc'])
 	{
-		scope.org= {};
-	}
-	
-	if (null == scope['org']['puremvc'])
-	{
-		scope['org']['puremvc']= {};
-	}
-	
-	if (null == scope['org']['puremvc']['js'])
-	{
-		scope['org']['puremvc']['js']= {};
-	}
-	
-	if (null == scope['org']['puremvc']['js']['multicore'])
-	{
-		scope['org']['puremvc']['js']['multicore'] = {};
+		scope['puremvc']= {};
 	}
 
  	/* implementation begin */
@@ -39,14 +24,14 @@
  */
 
 /**
- * @class org.puremvc.js.multicore.patterns.command.AsyncCommand
- * @extends org.puremvc.js.multicore.patterns.command.SimpleCommand
+ * @class puremvc.AsyncCommand
+ * @extends puremvc.SimpleCommand
  *
  * A base #AsyncCommand implementation.
  *
  * Your subclass should override the #execute method where your business logic
  * will handle the
- * {@link org.puremvc.js.multicore.patterns.observer.Notification Notification}
+ * {@link puremvc.Notification Notification}
  * 
  * @constructor
  */
@@ -54,7 +39,7 @@ function AsyncCommand() {
   this.isAsyncCommand = true;
 }
 
-AsyncCommand.prototype = new org.puremvc.js.multicore.patterns.observer.Notifier();
+AsyncCommand.prototype = new puremvc.Notifier();
 AsyncCommand.prototype.constructor = AsyncCommand;
 
 /**
@@ -91,13 +76,13 @@ AsyncCommand.prototype.commandComplete = function() {
  */
 
 /**
- * @class org.puremvc.js.multicore.patterns.command.AsyncMacroCommand
- * @extends org.puremvc.js.multicore.patterns.observer.Notifier
+ * @class puremvc.AsyncMacroCommand
+ * @extends puremvc.Notifier
  * 
  * A base command implementation that executes other commands asynchronously,
- * such as {@link org.puremvc.js.multicore.patterns.command.SimpleCommand 
+ * such as {@link puremvc.SimpleCommand
  * SimpleCommand} or 
- * {@link org.puremvc.js.multicore.patterns.command.MacroCommand MacroCommand}
+ * {@link puremvc.MacroCommand MacroCommand}
  * subclasses.
  *  
  * An AsyncMacroCommand maintains a list of command constructor references 
@@ -105,22 +90,22 @@ AsyncCommand.prototype.commandComplete = function() {
  * 
  * When #execute is called, the AsyncMacroCommand
  * caches a reference to the 
- * {@link org.puremvc.js.multicore.patterns.observer.Notification Notification} 
+ * {@link puremvc.Notification Notification}
  * and calls #nextCommand on each of its *SubCommands* in turn.
  *
  * If there are still *SubCommands* to be executed, the #nextCommand method 
  * instantiates and calls #execute on each of its *SubCommands* in turn. Each 
  * *SubCommand* will be passed a reference to the original 
- * {@link org.puremvc.js.multicore.patterns.observer.Notification Notification}
+ * {@link puremvc.Notification Notification}
  * that was passed to the #AsyncMacroCommand's #execute method. If the
  * *SubCommand* to execute is an #AsyncCommand, the next *SubCommand* will not 
  * be executed until the previous *AsyncCommand has called its 
  * *commandComplete* method.
  * 
  * Unlike 
- * {@link org.puremvc.js.multicore.patterns.command.AsyncCommand AsyncCommand}
+ * {@link puremvc.AsyncCommand AsyncCommand}
  * and 
- * {@link org.puremvc.js.multicore.patterns.command.SimpleCommand SimpleCommand},
+ * {@link puremvc.SimpleCommand SimpleCommand},
  * your subclass should not override #execute, but instead, should override the 
  * #initializeAsyncMacroCommand method, calling #addSubCommand once for each 
  * *SubCommand* to be executed.
@@ -143,7 +128,7 @@ function AsyncMacroCommand() {
 }
 
 /* subclass Notifier */
-AsyncMacroCommand.prototype = new org.puremvc.js.multicore.patterns.observer.Notifier();
+AsyncMacroCommand.prototype = new puremvc.Notifier();
 AsyncMacroCommand.prototype.constructor = AsyncMacroCommand;
 
 /**
@@ -215,7 +200,7 @@ AsyncMacroCommand.prototype.setOnComplete = function(value /*Function*/) {
  *
  * The *SubCommands* will be called in First In/First Out (FIFO) order.
  *
- * @param {org.puremvc.js.multicore.patterns.observer.Notification}
+ * @param {puremvc.Notification}
   * notification the #Notification object to be passed to each *SubCommand*.
  */
 AsyncMacroCommand.prototype.execute = function(notification /*Notification*/) {
@@ -259,13 +244,13 @@ AsyncMacroCommand.prototype.nextCommand = function() {
  	/* implementation end */
  	 
 	// export the AsyncCommand utility classes to the
-	// org.puremvc.js.multicore.patterns.command namespace
+	// puremvc namespace
 	var _classes = {
     'AsyncCommand': AsyncCommand,
     'AsyncMacroCommand': AsyncMacroCommand
   };
   for (var _class in _classes) {
-	  scope['org']['puremvc']['js']['multicore']['patterns']['command'][_class] = _classes[_class];
+	  scope['puremvc'][_class] = _classes[_class];
   }
 })(this); // the 'this' parameter will resolve to global scope in all environments
 
