@@ -11,7 +11,7 @@
 	{
 		scope['puremvc']= {};
 	}
-
+	
  	/* implementation begin */
 	
 	
@@ -192,7 +192,8 @@ AsyncMacroCommand.prototype.addSubCommand = function(commandClassRef/*Class*/) {
  * @param {Function} value The #AsyncMacroCommand method to call on completion.
  */
 AsyncMacroCommand.prototype.setOnComplete = function(value /*Function*/) {
-  this.onComplete = value.createDelegate(this);
+  var me = this;
+  this.onComplete = function(){return value.apply(me);};
 };
 
 /**
@@ -221,7 +222,8 @@ AsyncMacroCommand.prototype.nextCommand = function() {
     var isAsync/*Boolean*/ = commandInstance.isAsyncCommand;
 
     if (isAsync) {
-      commandInstance.setOnComplete(this.nextCommand.createDelegate(this));
+      var me = this;
+      commandInstance.setOnComplete(function(){return me.nextCommand.apply(me, arguments);});
     }
     commandInstance.initializeNotifier(this.multitonKey);
     commandInstance.execute(this.notification);
@@ -244,7 +246,7 @@ AsyncMacroCommand.prototype.nextCommand = function() {
  	/* implementation end */
  	 
 	// export the AsyncCommand utility classes to the
-	// puremvc namespace
+	// org.puremvc.js.multicore.patterns.command namespace
 	var _classes = {
     'AsyncCommand': AsyncCommand,
     'AsyncMacroCommand': AsyncMacroCommand
