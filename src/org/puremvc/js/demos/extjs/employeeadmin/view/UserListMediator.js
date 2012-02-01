@@ -11,8 +11,8 @@
 Ext.namespace("Puremvc.demo.view");
 Ext.define("Puremvc.demo.view.UserListMediator", {
 
-  /** @extends org.puremvc.js.multicore.patterns.mediator.Mediator */
-  extend: "org.puremvc.js.multicore.patterns.mediator.Mediator",
+  /** @extends puremvc.Mediator */
+  extend: "puremvc.Mediator",
 
   /**
    * Constructor
@@ -84,7 +84,7 @@ Ext.define("Puremvc.demo.view.UserListMediator", {
   /**
    * @override
    *
-   * @param {org.puremvc.js.multicore.patterns.observer.Notification}
+   * @param {puremvc.Notification}
     */
   handleNotification: function(note/*INotification*/) {
     var userList/*UserList*/ = this.getUserList();

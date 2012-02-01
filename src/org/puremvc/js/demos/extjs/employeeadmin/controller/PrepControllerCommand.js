@@ -11,8 +11,8 @@
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepControllerCommand", {
 
-  /** @extends org.puremvc.js.multicore.patterns.command.AsyncCommand */
-  extend: "org.puremvc.js.multicore.patterns.command.AsyncCommand",
+  /** @extends puremvc.AsyncCommand */
+  extend: "puremvc.AsyncCommand",
 
   /**
    * @class <code>AsyncCommand</code> subclass that is

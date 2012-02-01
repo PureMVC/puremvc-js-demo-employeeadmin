@@ -11,7 +11,7 @@
 Ext.namespace("Puremvc.demo.model");
 Ext.define("Puremvc.demo.model.UserProxy", {
 
-  extend: "org.puremvc.js.multicore.patterns.proxy.Proxy",
+  extend: "puremvc.Proxy",
 
   /**
    * Constructor

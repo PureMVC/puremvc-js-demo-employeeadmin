@@ -11,8 +11,8 @@
 Ext.namespace("Puremvc.demo");
 Ext.define("Puremvc.demo.ApplicationFacade", {
 
-  /** @extends org.puremvc.js.multicore.patterns.facade.Facade */
-  extend: "org.puremvc.js.multicore.patterns.facade.Facade",
+  /** @extends puremvc.Facade */
+  extend: "puremvc.Facade",
 
   /**
    * @class <p>
@@ -172,10 +172,10 @@ Ext.define("Puremvc.demo.ApplicationFacade", {
      * used throughout the application.
      */
     getInstance: function(key /* string */) {
-      if (!org.puremvc.js.multicore.patterns.facade.Facade.hasCore(key)) {
+      if (!puremvc.Facade.hasCore(key)) {
         new Puremvc.demo.ApplicationFacade(key);
       }
-      var retVal = org.puremvc.js.multicore.patterns.facade.Facade.getInstance(key);
+      var retVal = puremvc.Facade.getInstance(key);
       return retVal;
     }
   }

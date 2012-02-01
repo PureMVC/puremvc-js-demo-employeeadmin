@@ -11,7 +11,7 @@
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.AddRoleResultCommand", {
 
-  extend: "org.puremvc.js.multicore.patterns.command.AsyncCommand",
+  extend: "puremvc.AsyncCommand",
 
   execute: function(notification/*INotification*/) {
     var result/*Boolean*/ = notification.getBody();

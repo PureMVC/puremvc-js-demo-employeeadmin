@@ -11,8 +11,8 @@
 Ext.namespace("Puremvc.demo.view");
 Ext.define("Puremvc.demo.view.ApplicationMediator", {
 
-  /** @extends org.puremvc.js.multicore.patterns.mediator.Mediator */
-  extend: "org.puremvc.js.multicore.patterns.mediator.Mediator",
+  /** @extends puremvc.Mediator */
+  extend: "puremvc.Mediator",
     
   /**
    * A named shortcut to the <code>Application</code> instance.  This

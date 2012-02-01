@@ -11,8 +11,8 @@
 Ext.namespace("Puremvc.demo.view");
 Ext.define("Puremvc.demo.view.UserFormMediator", {
 
-  /** @extends org.puremvc.js.multicore.patterns.mediator.Mediator */
-  extend: "org.puremvc.js.multicore.patterns.mediator.Mediator",
+  /** @extends puremvc.Mediator */
+  extend: "puremvc.Mediator",
 
   /**
    * Constructor

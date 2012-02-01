@@ -51,7 +51,7 @@ Ext.define("Puremvc.demo.view.components.Application", {
           items: [
             {
               xtype: "label",
-              html: "<span class=\"application-name\">Employee Admin</span>&nbsp;<span class=\"application-category\">PureMVC JavaScript/ExtJS Demo</span>",
+              html: "<span class=\"application-name\">Employee Admin</span>&nbsp;<span class=\"application-category\">PureMVC JavaScript/ExtJS4 Demo</span>",
               flex: 0
             },
             {

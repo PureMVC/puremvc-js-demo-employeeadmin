@@ -11,7 +11,7 @@
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.StartupCommand", {
 
-  extend: "org.puremvc.js.multicore.patterns.command.AsyncMacroCommand",
+  extend: "puremvc.AsyncMacroCommand",
 
   /**
    * Add the Subcommands to startup the PureMVC apparatus.

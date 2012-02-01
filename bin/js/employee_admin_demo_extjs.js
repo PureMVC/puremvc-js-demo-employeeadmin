@@ -11,8 +11,8 @@
 Ext.namespace("Puremvc.demo");
 Ext.define("Puremvc.demo.ApplicationFacade", {
 
-  /** @extends org.puremvc.js.multicore.patterns.facade.Facade */
-  extend: "org.puremvc.js.multicore.patterns.facade.Facade",
+  /** @extends puremvc.Facade */
+  extend: "puremvc.Facade",
 
   /**
    * @class <p>
@@ -172,10 +172,10 @@ Ext.define("Puremvc.demo.ApplicationFacade", {
      * used throughout the application.
      */
     getInstance: function(key /* string */) {
-      if (!org.puremvc.js.multicore.patterns.facade.Facade.hasCore(key)) {
+      if (!puremvc.Facade.hasCore(key)) {
         new Puremvc.demo.ApplicationFacade(key);
       }
-      var retVal = org.puremvc.js.multicore.patterns.facade.Facade.getInstance(key);
+      var retVal = puremvc.Facade.getInstance(key);
       return retVal;
     }
   }
@@ -235,7 +235,7 @@ Ext.define("Puremvc.demo.common.Util", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.AddRoleResultCommand", {
 
-  extend: "org.puremvc.js.multicore.patterns.command.AsyncCommand",
+  extend: "puremvc.AsyncCommand",
 
   execute: function(notification/*INotification*/) {
     var result/*Boolean*/ = notification.getBody();
@@ -261,7 +261,7 @@ Ext.define("Puremvc.demo.controller.AddRoleResultCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.DeleteUserCommand", {
 
-  extend: "org.puremvc.js.multicore.patterns.command.AsyncCommand",
+  extend: "puremvc.AsyncCommand",
 
   execute: function(notification/*INotification*/) {
     var user/*UserVO*/ = notification.getBody();
@@ -291,8 +291,8 @@ Ext.define("Puremvc.demo.controller.DeleteUserCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepControllerCommand", {
 
-  /** @extends org.puremvc.js.multicore.patterns.command.AsyncCommand */
-  extend: "org.puremvc.js.multicore.patterns.command.AsyncCommand",
+  /** @extends puremvc.AsyncCommand */
+  extend: "puremvc.AsyncCommand",
 
   /**
    * @class <code>AsyncCommand</code> subclass that is
@@ -330,7 +330,7 @@ Ext.define("Puremvc.demo.controller.PrepControllerCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepModelCommand", {
 
-  extend: "org.puremvc.js.multicore.patterns.command.AsyncCommand",
+  extend: "puremvc.AsyncCommand",
 
   /**
    * @class <code>AsyncCommand</code> subclass that is
@@ -367,7 +367,7 @@ Ext.define("Puremvc.demo.controller.PrepModelCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepViewCommand", {
 
-  extend: "org.puremvc.js.multicore.patterns.command.AsyncCommand",
+  extend: "puremvc.AsyncCommand",
 
   /**
    * @class <code>AsyncCommand</code> subclass that is
@@ -408,7 +408,7 @@ Ext.define("Puremvc.demo.controller.PrepViewCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.StartupCommand", {
 
-  extend: "org.puremvc.js.multicore.patterns.command.AsyncMacroCommand",
+  extend: "puremvc.AsyncMacroCommand",
 
   /**
    * Add the Subcommands to startup the PureMVC apparatus.
@@ -791,7 +791,7 @@ Ext.define("Puremvc.demo.model.vo.UserVO", {
 Ext.namespace("Puremvc.demo.model");
 Ext.define("Puremvc.demo.model.RoleProxy", {
 
-  extend: "org.puremvc.js.multicore.patterns.proxy.Proxy",
+  extend: "puremvc.Proxy",
 
   /**
    * Constructor
@@ -998,7 +998,7 @@ Ext.define("Puremvc.demo.model.RoleProxy", {
 Ext.namespace("Puremvc.demo.model");
 Ext.define("Puremvc.demo.model.UserProxy", {
 
-  extend: "org.puremvc.js.multicore.patterns.proxy.Proxy",
+  extend: "puremvc.Proxy",
 
   /**
    * Constructor
@@ -1144,7 +1144,7 @@ Ext.define("Puremvc.demo.view.components.Application", {
           items: [
             {
               xtype: "label",
-              html: "<span class=\"application-name\">Employee Admin</span>&nbsp;<span class=\"application-category\">PureMVC JavaScript/ExtJS Demo</span>",
+              html: "<span class=\"application-name\">Employee Admin</span>&nbsp;<span class=\"application-category\">PureMVC JavaScript/ExtJS4 Demo</span>",
               flex: 0
             },
             {
@@ -2230,8 +2230,8 @@ Ext.define("Puremvc.demo.view.components.UserList", {
 Ext.namespace("Puremvc.demo.view");
 Ext.define("Puremvc.demo.view.ApplicationMediator", {
 
-  /** @extends org.puremvc.js.multicore.patterns.mediator.Mediator */
-  extend: "org.puremvc.js.multicore.patterns.mediator.Mediator",
+  /** @extends puremvc.Mediator */
+  extend: "puremvc.Mediator",
     
   /**
    * A named shortcut to the <code>Application</code> instance.  This
@@ -2341,8 +2341,8 @@ Ext.define("Puremvc.demo.view.ApplicationMediator", {
 Ext.namespace("Puremvc.demo.view");
 Ext.define("Puremvc.demo.view.RolePanelMediator", {
 
-  /** @extends org.puremvc.js.multicore.patterns.mediator.Mediator */
-  extend: "org.puremvc.js.multicore.patterns.mediator.Mediator",
+  /** @extends puremvc.Mediator */
+  extend: "puremvc.Mediator",
 
   /**
    * Constructor
@@ -2496,8 +2496,8 @@ Ext.define("Puremvc.demo.view.RolePanelMediator", {
 Ext.namespace("Puremvc.demo.view");
 Ext.define("Puremvc.demo.view.UserFormMediator", {
 
-  /** @extends org.puremvc.js.multicore.patterns.mediator.Mediator */
-  extend: "org.puremvc.js.multicore.patterns.mediator.Mediator",
+  /** @extends puremvc.Mediator */
+  extend: "puremvc.Mediator",
 
   /**
    * Constructor
@@ -2643,8 +2643,8 @@ Ext.define("Puremvc.demo.view.UserFormMediator", {
 Ext.namespace("Puremvc.demo.view");
 Ext.define("Puremvc.demo.view.UserListMediator", {
 
-  /** @extends org.puremvc.js.multicore.patterns.mediator.Mediator */
-  extend: "org.puremvc.js.multicore.patterns.mediator.Mediator",
+  /** @extends puremvc.Mediator */
+  extend: "puremvc.Mediator",
 
   /**
    * Constructor
@@ -2716,7 +2716,7 @@ Ext.define("Puremvc.demo.view.UserListMediator", {
   /**
    * @override
    *
-   * @param {org.puremvc.js.multicore.patterns.observer.Notification}
+   * @param {puremvc.Notification}
     */
   handleNotification: function(note/*INotification*/) {
     var userList/*UserList*/ = this.getUserList();
