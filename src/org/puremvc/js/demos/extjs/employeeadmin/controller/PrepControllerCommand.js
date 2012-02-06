@@ -11,11 +11,11 @@
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepControllerCommand", {
 
-  /** @extends puremvc.AsyncCommand */
-  extend: "puremvc.AsyncCommand",
+  /** @extends puremvc.SimpleCommand */
+  extend: "puremvc.SimpleCommand",
 
   /**
-   * @class <code>AsyncCommand</code> subclass that is
+   * @class <code>SimpleCommand</code> subclass that is
    * responsible for preparing the <code>Controller</code>.
    * This is where all <code>Command</code> subclasses are
    * registered with the <code>Controller</code>.
@@ -32,7 +32,5 @@ Ext.define("Puremvc.demo.controller.PrepControllerCommand", {
     // Register all of the non-system commands used by the application.
     this.facade.registerCommand(Puremvc.demo.ApplicationFacade.ADD_ROLE_RESULT, Puremvc.demo.controller.AddRoleResultCommand);
     this.facade.registerCommand(Puremvc.demo.ApplicationFacade.DELETE_USER, Puremvc.demo.controller.DeleteUserCommand);
-
-    this.commandComplete();
   }
 });

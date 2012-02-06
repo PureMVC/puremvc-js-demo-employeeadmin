@@ -235,7 +235,7 @@ Ext.define("Puremvc.demo.common.Util", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.AddRoleResultCommand", {
 
-  extend: "puremvc.AsyncCommand",
+  extend: "puremvc.SimpleCommand",
 
   execute: function(notification/*INotification*/) {
     var result/*Boolean*/ = notification.getBody();
@@ -243,8 +243,6 @@ Ext.define("Puremvc.demo.controller.AddRoleResultCommand", {
     if (result === false) {
       Puremvc.demo.common.Util.alert("Role already exists for this user!", "Add User Role");
     }
-
-    this.commandComplete();
   }
 });
 
@@ -261,7 +259,7 @@ Ext.define("Puremvc.demo.controller.AddRoleResultCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.DeleteUserCommand", {
 
-  extend: "puremvc.AsyncCommand",
+  extend: "puremvc.SimpleCommand",
 
   execute: function(notification/*INotification*/) {
     var user/*UserVO*/ = notification.getBody();
@@ -273,8 +271,6 @@ Ext.define("Puremvc.demo.controller.DeleteUserCommand", {
     roleProxy.deleteItem(user);
 
     this.sendNotification(Puremvc.demo.ApplicationFacade.USER_DELETED);
-
-    this.commandComplete();
   }
 });
 
@@ -291,11 +287,11 @@ Ext.define("Puremvc.demo.controller.DeleteUserCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepControllerCommand", {
 
-  /** @extends puremvc.AsyncCommand */
-  extend: "puremvc.AsyncCommand",
+  /** @extends puremvc.SimpleCommand */
+  extend: "puremvc.SimpleCommand",
 
   /**
-   * @class <code>AsyncCommand</code> subclass that is
+   * @class <code>SimpleCommand</code> subclass that is
    * responsible for preparing the <code>Controller</code>.
    * This is where all <code>Command</code> subclasses are
    * registered with the <code>Controller</code>.
@@ -312,8 +308,6 @@ Ext.define("Puremvc.demo.controller.PrepControllerCommand", {
     // Register all of the non-system commands used by the application.
     this.facade.registerCommand(Puremvc.demo.ApplicationFacade.ADD_ROLE_RESULT, Puremvc.demo.controller.AddRoleResultCommand);
     this.facade.registerCommand(Puremvc.demo.ApplicationFacade.DELETE_USER, Puremvc.demo.controller.DeleteUserCommand);
-
-    this.commandComplete();
   }
 });
 
@@ -330,10 +324,10 @@ Ext.define("Puremvc.demo.controller.PrepControllerCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepModelCommand", {
 
-  extend: "puremvc.AsyncCommand",
+  extend: "puremvc.SimpleCommand",
 
   /**
-   * @class <code>AsyncCommand</code> subclass that is
+   * @class <code>SimpleCommand</code> subclass that is
    * responsible for preparing the <code>Model</code>.
    * This is where all <code>Proxy</code> subclasses are
    * registered with the <code>Model</code>.
@@ -349,8 +343,6 @@ Ext.define("Puremvc.demo.controller.PrepModelCommand", {
   execute: function(notification/*INotification*/) {
     this.facade.registerProxy(new Puremvc.demo.model.UserProxy());
     this.facade.registerProxy(new Puremvc.demo.model.RoleProxy());
-
-    this.commandComplete();
   }
 });
 
@@ -367,10 +359,10 @@ Ext.define("Puremvc.demo.controller.PrepModelCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepViewCommand", {
 
-  extend: "puremvc.AsyncCommand",
+  extend: "puremvc.SimpleCommand",
 
   /**
-   * @class <code>AsyncCommand</code> subclass that is
+   * @class <code>SimpleCommand</code> subclass that is
    * responsible for preparing the <code>View</code>.
    * This is where the <code>ApplicationMediator</code> subclass is
    * registered with the <code>View</code>.
@@ -390,8 +382,6 @@ Ext.define("Puremvc.demo.controller.PrepViewCommand", {
     // Register the ApplicationMediator passing the Application
     // instance to its constructor.
     this.facade.registerMediator(new Puremvc.demo.view.ApplicationMediator(app));
-
-    this.commandComplete();
   }
 });
 
@@ -408,7 +398,7 @@ Ext.define("Puremvc.demo.controller.PrepViewCommand", {
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.StartupCommand", {
 
-  extend: "puremvc.AsyncMacroCommand",
+  extend: "puremvc.MacroCommand",
 
   /**
    * Add the Subcommands to startup the PureMVC apparatus.
@@ -417,7 +407,7 @@ Ext.define("Puremvc.demo.controller.StartupCommand", {
    * followed by preparation of the View (mostly the registering of
    * Mediators).
    */
-  initializeAsyncMacroCommand: function(note/*INotification*/) {
+  initializeMacroCommand: function(note/*INotification*/) {
     this.addSubCommand(Puremvc.demo.controller.PrepControllerCommand);
     this.addSubCommand(Puremvc.demo.controller.PrepModelCommand);
     this.addSubCommand(Puremvc.demo.controller.PrepViewCommand);
@@ -1150,6 +1140,7 @@ Ext.define("Puremvc.demo.view.components.Application", {
             {
               xtype: "x-demo-user-list-panel",
               id: "userList",
+              border: "normal",
               width: 650,
               height: 250,
               flex: 1
@@ -1210,7 +1201,7 @@ Ext.namespace("Puremvc.demo.view.components");
 Ext.define("Puremvc.demo.view.components.RolePanel", {
 
   /** @extends Ext.form.Panel */
-  extend: "Ext.form.Panel",
+  extend: "Ext.grid.Panel",
 
   alias: "widget.x-demo-role-list-panel",
 
@@ -1247,6 +1238,7 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
   initComponent: function() {
     var config = {
       title: "User Roles",
+      bodyCls: "grid-background",
       buttons: [
         {
           xtype: "combobox",
@@ -1298,47 +1290,41 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
           }
         }
       ],
-      items: [
+      layout: "fit",
+      viewConfig: {
+        deferEmptyText: false,
+        emptyText: "No Roles Assigned Yet",
+        forceFit: true,
+        itemSelector: "tr.x-grid-row",
+        stripeRows: true,
+        tpl: new Ext.XTemplate("<div></div>")
+      },
+      viewType: "gridview",
+      selModel: {mode: "SINGLE"},
+      selType: "rowmodel",
+      hideHeaders: true,
+      frame: true,
+      columns: [
         {
-          xtype: "gridpanel",
-          id: "userRoleList",
-          layout: "fit",
-          viewConfig: {
-            deferEmptyText: false,
-            emptyText: "No Roles Assigned Yet",
-            forceFit: true,
-            itemSelector: "tr.x-grid-row",
-            stripeRows: true,
-            tpl: new Ext.XTemplate("<div></div>")
-          },
-          viewType: "gridview",
-          selModel: {mode: "SINGLE"},
-          selType: "rowmodel",
-          hideHeaders: true,
-          frame: false,
-          columns: [
-            {
-              dataIndex: "value",
-              flex: 1
-            }
-          ],
-          store: Ext.create("Ext.data.Store", {
-            model: "RoleVO",
-            proxy: {
-              type: "memory",
-              reader: {
-                type: "array"
-              }
-            }
-          }),
-          listeners: {
-            "selectionchange": {
-              fn: this.userRoleList_changeHandler,
-              scope: this
-            }
+          dataIndex: "value",
+          flex: 1
+        }
+      ],
+      store: Ext.create("Ext.data.Store", {
+        model: "RoleVO",
+        proxy: {
+          type: "memory",
+          reader: {
+            type: "array"
           }
         }
-      ]
+      }),
+      listeners: {
+        "selectionchange": {
+          fn: this.userRoleList_changeHandler,
+          scope: this
+        }
+      }
     };
     Ext.apply(this, config);
     this.initialConfig = Ext.apply({}, config);
@@ -1380,8 +1366,7 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
     userRoles = userRoles || [];
 
     /* First clear out any existing roles. */
-    var roleList = this.getComponent("userRoleList");
-    var store = roleList.getStore();
+    var store = this.getStore();
     store.removeAll(false); // true -> Don't fire the 'clear' event.
 
     // Load the rolelist with data from the role enum list.
@@ -1413,8 +1398,7 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
   },
 
   setSelectedUserRoleValue: function(value/*Number*/) {
-    var userRoleListView = this.getComponent("userRoleList");
-    var sm = userRoleListView.getSelectionModel();
+    var sm = this.getSelectionModel();
     if (value == -1) {
       sm.selected.clear();
     }
@@ -1435,8 +1419,7 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
       control.setDisabled(flag);
     }
 
-    var userRoleList = this.getComponent("userRoleList");
-    userRoleList.setDisabled(flag);
+    this.view.setDisabled(flag);
 
     if (flag) {
       this.setSelectedRoleValue(-1);
@@ -2047,6 +2030,7 @@ Ext.define("Puremvc.demo.view.components.UserList", {
   initComponent: function() {
     var config = {
       title: "Users",
+      bodyCls: "grid-background",
       frame: true,
       buttons: [
         {

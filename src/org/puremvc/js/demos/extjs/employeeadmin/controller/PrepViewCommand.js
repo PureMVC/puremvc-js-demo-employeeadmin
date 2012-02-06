@@ -11,10 +11,10 @@
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepViewCommand", {
 
-  extend: "puremvc.AsyncCommand",
+  extend: "puremvc.SimpleCommand",
 
   /**
-   * @class <code>AsyncCommand</code> subclass that is
+   * @class <code>SimpleCommand</code> subclass that is
    * responsible for preparing the <code>View</code>.
    * This is where the <code>ApplicationMediator</code> subclass is
    * registered with the <code>View</code>.
@@ -34,7 +34,5 @@ Ext.define("Puremvc.demo.controller.PrepViewCommand", {
     // Register the ApplicationMediator passing the Application
     // instance to its constructor.
     this.facade.registerMediator(new Puremvc.demo.view.ApplicationMediator(app));
-
-    this.commandComplete();
   }
 });

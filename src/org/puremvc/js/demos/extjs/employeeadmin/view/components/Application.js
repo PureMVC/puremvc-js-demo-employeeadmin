@@ -57,6 +57,7 @@ Ext.define("Puremvc.demo.view.components.Application", {
             {
               xtype: "x-demo-user-list-panel",
               id: "userList",
+              border: "normal",
               width: 650,
               height: 250,
               flex: 1

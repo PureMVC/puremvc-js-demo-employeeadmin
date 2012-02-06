@@ -11,7 +11,7 @@
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.DeleteUserCommand", {
 
-  extend: "puremvc.AsyncCommand",
+  extend: "puremvc.SimpleCommand",
 
   execute: function(notification/*INotification*/) {
     var user/*UserVO*/ = notification.getBody();
@@ -23,7 +23,5 @@ Ext.define("Puremvc.demo.controller.DeleteUserCommand", {
     roleProxy.deleteItem(user);
 
     this.sendNotification(Puremvc.demo.ApplicationFacade.USER_DELETED);
-
-    this.commandComplete();
   }
 });

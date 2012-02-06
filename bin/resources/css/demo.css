@@ -13,7 +13,10 @@
 }
 
 .required {
-  background-image: url("../themes/images/demo/required_field.gif");
-  background-repeat: no-repeat;
+  background: url("../themes/images/demo/required_field.gif") no-repeat;
   background-position: right;
+}
+
+.grid-background {
+  background-color: transparent !important;
 }

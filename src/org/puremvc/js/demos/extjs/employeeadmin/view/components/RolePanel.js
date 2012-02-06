@@ -12,7 +12,7 @@ Ext.namespace("Puremvc.demo.view.components");
 Ext.define("Puremvc.demo.view.components.RolePanel", {
 
   /** @extends Ext.form.Panel */
-  extend: "Ext.form.Panel",
+  extend: "Ext.grid.Panel",
 
   alias: "widget.x-demo-role-list-panel",
 
@@ -49,6 +49,7 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
   initComponent: function() {
     var config = {
       title: "User Roles",
+      bodyCls: "grid-background",
       buttons: [
         {
           xtype: "combobox",
@@ -100,47 +101,41 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
           }
         }
       ],
-      items: [
+      layout: "fit",
+      viewConfig: {
+        deferEmptyText: false,
+        emptyText: "No Roles Assigned Yet",
+        forceFit: true,
+        itemSelector: "tr.x-grid-row",
+        stripeRows: true,
+        tpl: new Ext.XTemplate("<div></div>")
+      },
+      viewType: "gridview",
+      selModel: {mode: "SINGLE"},
+      selType: "rowmodel",
+      hideHeaders: true,
+      frame: true,
+      columns: [
         {
-          xtype: "gridpanel",
-          id: "userRoleList",
-          layout: "fit",
-          viewConfig: {
-            deferEmptyText: false,
-            emptyText: "No Roles Assigned Yet",
-            forceFit: true,
-            itemSelector: "tr.x-grid-row",
-            stripeRows: true,
-            tpl: new Ext.XTemplate("<div></div>")
-          },
-          viewType: "gridview",
-          selModel: {mode: "SINGLE"},
-          selType: "rowmodel",
-          hideHeaders: true,
-          frame: false,
-          columns: [
-            {
-              dataIndex: "value",
-              flex: 1
-            }
-          ],
-          store: Ext.create("Ext.data.Store", {
-            model: "RoleVO",
-            proxy: {
-              type: "memory",
-              reader: {
-                type: "array"
-              }
-            }
-          }),
-          listeners: {
-            "selectionchange": {
-              fn: this.userRoleList_changeHandler,
-              scope: this
-            }
+          dataIndex: "value",
+          flex: 1
+        }
+      ],
+      store: Ext.create("Ext.data.Store", {
+        model: "RoleVO",
+        proxy: {
+          type: "memory",
+          reader: {
+            type: "array"
           }
         }
-      ]
+      }),
+      listeners: {
+        "selectionchange": {
+          fn: this.userRoleList_changeHandler,
+          scope: this
+        }
+      }
     };
     Ext.apply(this, config);
     this.initialConfig = Ext.apply({}, config);
@@ -182,8 +177,7 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
     userRoles = userRoles || [];
 
     /* First clear out any existing roles. */
-    var roleList = this.getComponent("userRoleList");
-    var store = roleList.getStore();
+    var store = this.getStore();
     store.removeAll(false); // true -> Don't fire the 'clear' event.
 
     // Load the rolelist with data from the role enum list.
@@ -215,8 +209,7 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
   },
 
   setSelectedUserRoleValue: function(value/*Number*/) {
-    var userRoleListView = this.getComponent("userRoleList");
-    var sm = userRoleListView.getSelectionModel();
+    var sm = this.getSelectionModel();
     if (value == -1) {
       sm.selected.clear();
     }
@@ -237,8 +230,7 @@ Ext.define("Puremvc.demo.view.components.RolePanel", {
       control.setDisabled(flag);
     }
 
-    var userRoleList = this.getComponent("userRoleList");
-    userRoleList.setDisabled(flag);
+    this.view.setDisabled(flag);
 
     if (flag) {
       this.setSelectedRoleValue(-1);

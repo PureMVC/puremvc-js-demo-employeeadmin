@@ -11,10 +11,10 @@
 Ext.namespace("Puremvc.demo.controller");
 Ext.define("Puremvc.demo.controller.PrepModelCommand", {
 
-  extend: "puremvc.AsyncCommand",
+  extend: "puremvc.SimpleCommand",
 
   /**
-   * @class <code>AsyncCommand</code> subclass that is
+   * @class <code>SimpleCommand</code> subclass that is
    * responsible for preparing the <code>Model</code>.
    * This is where all <code>Proxy</code> subclasses are
    * registered with the <code>Model</code>.
@@ -30,7 +30,5 @@ Ext.define("Puremvc.demo.controller.PrepModelCommand", {
   execute: function(notification/*INotification*/) {
     this.facade.registerProxy(new Puremvc.demo.model.UserProxy());
     this.facade.registerProxy(new Puremvc.demo.model.RoleProxy());
-
-    this.commandComplete();
   }
 });

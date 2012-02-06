@@ -38,6 +38,7 @@ Ext.define("Puremvc.demo.view.components.UserList", {
   initComponent: function() {
     var config = {
       title: "Users",
+      bodyCls: "grid-background",
       frame: true,
       buttons: [
         {
