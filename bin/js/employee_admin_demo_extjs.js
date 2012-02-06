@@ -9,7 +9,7 @@
  * @lends Puremvc.demo.ApplicationFacade.prototype
  */
 Ext.ns('Puremvc.demo');
-Puremvc.demo.ApplicationFacade = Ext.extend(Puremvc.patterns.Facade,
+Puremvc.demo.ApplicationFacade = Ext.extend(puremvc.Facade,
 {
   /**
    * @class <p>
@@ -35,7 +35,7 @@ Puremvc.demo.ApplicationFacade = Ext.extend(Puremvc.patterns.Facade,
    * use." For more information on creating the concrete Facade, see page
    * 11 in "Implementation Idioms and Best Practices" by Cliff Hall.
    * </p>
-   * @extends Puremvc.patterns.Facade
+   * @extends puremvc.Facade
    *
    * @param {string} key The multiton key.
    *
@@ -170,10 +170,10 @@ Ext.apply(Puremvc.demo.ApplicationFacade, {
    * used throughout the application.
    */
   getInstance: function(key /* string */) {
-    if (!Puremvc.patterns.Facade.hasCore(key)) {
+    if (!puremvc.Facade.hasCore(key)) {
       new Puremvc.demo.ApplicationFacade(key);
     }
-    var retVal = Puremvc.patterns.Facade.getInstance(key);
+    var retVal = puremvc.Facade.getInstance(key);
     return retVal;
   }
 });
@@ -221,7 +221,7 @@ Puremvc.demo.common.Util = {
  */
 Ext.ns("Puremvc.demo.controller");
 
-Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(puremvc.AsyncCommand, {
   execute: function(notification/*INotification*/) {
     var result/*Boolean*/ = notification.getBody();
 
@@ -244,7 +244,7 @@ Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(Puremvc.patterns.Async
  * @lends Puremvc.demo.controller.DeleteUserCommand.prototype
  */
 Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.DeleteUserCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.DeleteUserCommand = Ext.extend(puremvc.AsyncCommand, {
   execute: function(notification/*INotification*/) {
     var user/*UserVO*/ = notification.getBody();
 
@@ -264,14 +264,14 @@ Puremvc.demo.controller.DeleteUserCommand = Ext.extend(Puremvc.patterns.AsyncCom
  * @lends Puremvc.demo.controller.PrepControllerCommand.prototype
  */
 Ext.namespace('Puremvc.demo.controller');
-Puremvc.demo.controller.PrepControllerCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.PrepControllerCommand = Ext.extend(puremvc.AsyncCommand, {
   /**
    * @class <code>AsyncCommand</code> subclass that is
    * responsible for preparing the data <code>Model</code>.
    * This is where all <code>Proxy</code> subclasses are
    * registered with the <code>Model</code>.
    *
-   * @extends Puremvc.patterns.AsyncCommand
+   * @extends puremvc.AsyncCommand
    *
    * @author Tony DeFusco
    *
@@ -301,7 +301,7 @@ Puremvc.demo.controller.PrepControllerCommand = Ext.extend(Puremvc.patterns.Asyn
  * @lends Puremvc.demo.controller.PrepModelCommand.prototype
  */
 Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.PrepModelCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.PrepModelCommand = Ext.extend(puremvc.AsyncCommand, {
   execute: function(notification/*INotification*/) {
     this.facade.registerProxy(new Puremvc.demo.model.UserProxy());
     this.facade.registerProxy(new Puremvc.demo.model.RoleProxy());
@@ -321,7 +321,7 @@ Puremvc.demo.controller.PrepModelCommand = Ext.extend(Puremvc.patterns.AsyncComm
  * @lends Puremvc.demo.controller.PrepViewCommand.prototype
  */
 Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.PrepViewCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.PrepViewCommand = Ext.extend(puremvc.AsyncCommand, {
   execute: function(notification/*INotification*/) {
     // Create the Application component.
     var app = new Puremvc.demo.view.components.Application({});
@@ -345,7 +345,7 @@ Puremvc.demo.controller.PrepViewCommand = Ext.extend(Puremvc.patterns.AsyncComma
  * @lends Puremvc.demo.controller.PrepViewCommand.prototype
  */
 Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.StartupCommand = Ext.extend(Puremvc.patterns.AsyncMacroCommand, {
+Puremvc.demo.controller.StartupCommand = Ext.extend(puremvc.AsyncMacroCommand, {
   /**
    * Add the Subcommands to startup the PureMVC apparatus.
    *
@@ -739,7 +739,7 @@ Ext.apply(Puremvc.demo.model.RoleEnum, {
  * @lends Puremvc.demo.model.RoleProxy.prototype
  */
 Ext.ns("Puremvc.demo.model");
-Puremvc.demo.model.RoleProxy = Ext.extend(Puremvc.patterns.Proxy, {
+Puremvc.demo.model.RoleProxy = Ext.extend(puremvc.Proxy, {
 
   /**
    * Constructor
@@ -938,7 +938,7 @@ Ext.apply(Puremvc.demo.model.RoleProxy, {
  * @lends Puremvc.demo.model.UserProxy.prototype
  */
 Ext.ns("Puremvc.demo.model");
-Puremvc.demo.model.UserProxy = Ext.extend(Puremvc.patterns.Proxy, {
+Puremvc.demo.model.UserProxy = Ext.extend(puremvc.Proxy, {
 
   /**
    * Constructor
@@ -2174,7 +2174,7 @@ Ext.reg("x-demo-user-list-panel", Puremvc.demo.view.components.UserList);
  * @lends Puremvc.demo.view.ApplicationMediator.prototype
  */
 Ext.namespace('Puremvc.demo.view');
-Puremvc.demo.view.ApplicationMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Puremvc.demo.view.ApplicationMediator = Ext.extend(puremvc.Mediator, {
   /**
    * A named shortcut to the <code>Application</code> instance.  This
    * prevents us from having to reference the more
@@ -2192,7 +2192,7 @@ Puremvc.demo.view.ApplicationMediator = Ext.extend(Puremvc.patterns.Mediator, {
    *
    * @param {Puremvc.demo.view.components.Application} viewComponent the view component to register with the <code>ApplicationMediator</code>.
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    *
    * @see Puremvc.demo.view.components.Application
    *
@@ -2224,9 +2224,9 @@ Puremvc.demo.view.ApplicationMediator = Ext.extend(Puremvc.patterns.Mediator, {
    * the <code>Notification</code> is listed in the <code>listNotificationInterests()</code>
    * return value.
    *
-   * @param {Puremvc.patterns.Notification} notification the notification to act upon.
+   * @param {puremvc.Notification} notification the notification to act upon.
    */
-  handleNotification: function(notification /* Puremvc.patterns.Notification */) {
+  handleNotification: function(notification /* puremvc.Notification */) {
     switch (notification.getName()) {
       default:
         break;
@@ -2283,11 +2283,11 @@ Ext.apply(Puremvc.demo.view.ApplicationMediator,
  * @lends Puremvc.demo.view.RolePanelMediator.prototype
  */
 Ext.ns("Puremvc.demo.view");
-Puremvc.demo.view.RolePanelMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Puremvc.demo.view.RolePanelMediator = Ext.extend(puremvc.Mediator, {
   /**
    * Constructor
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    * @constructs
    */
   constructor: function(viewComponent/*Object*/) {
@@ -2436,12 +2436,12 @@ Ext.apply(Puremvc.demo.view.RolePanelMediator, {
  * @lends Puremvc.demo.view.UserFormMediator.prototype
  */
 Ext.ns("Puremvc.demo.view");
-Puremvc.demo.view.UserFormMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Puremvc.demo.view.UserFormMediator = Ext.extend(puremvc.Mediator, {
 
   /**
    * Constructor
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    * @constructs
    */
   constructor: function(viewComponent/*Object*/) {
@@ -2581,12 +2581,12 @@ Ext.apply(Puremvc.demo.view.UserFormMediator, {
  * @lends Puremvc.demo.view.UserListMediator.prototype
  */
 Ext.ns("Puremvc.demo.view");
-Puremvc.demo.view.UserListMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Puremvc.demo.view.UserListMediator = Ext.extend(puremvc.Mediator, {
 
   /**
    * Constructor
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    * @constructs
    */
   constructor: function(viewComponent/*Object*/) {

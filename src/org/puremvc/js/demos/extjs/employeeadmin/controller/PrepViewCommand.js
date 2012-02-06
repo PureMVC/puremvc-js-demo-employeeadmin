@@ -9,7 +9,7 @@
  * @lends Puremvc.demo.controller.PrepViewCommand.prototype
  */
 Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.PrepViewCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.PrepViewCommand = Ext.extend(puremvc.AsyncCommand, {
   execute: function(notification/*INotification*/) {
     // Create the Application component.
     var app = new Puremvc.demo.view.components.Application({});

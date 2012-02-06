@@ -10,7 +10,7 @@
  */
 Ext.ns("Puremvc.demo.controller");
 
-Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(puremvc.AsyncCommand, {
   execute: function(notification/*INotification*/) {
     var result/*Boolean*/ = notification.getBody();
 

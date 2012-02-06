@@ -9,12 +9,12 @@
  * @lends Puremvc.demo.view.UserFormMediator.prototype
  */
 Ext.ns("Puremvc.demo.view");
-Puremvc.demo.view.UserFormMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Puremvc.demo.view.UserFormMediator = Ext.extend(puremvc.Mediator, {
 
   /**
    * Constructor
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    * @constructs
    */
   constructor: function(viewComponent/*Object*/) {

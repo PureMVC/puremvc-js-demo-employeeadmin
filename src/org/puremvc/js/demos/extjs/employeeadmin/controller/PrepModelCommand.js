@@ -9,7 +9,7 @@
  * @lends Puremvc.demo.controller.PrepModelCommand.prototype
  */
 Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.PrepModelCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.PrepModelCommand = Ext.extend(puremvc.AsyncCommand, {
   execute: function(notification/*INotification*/) {
     this.facade.registerProxy(new Puremvc.demo.model.UserProxy());
     this.facade.registerProxy(new Puremvc.demo.model.RoleProxy());

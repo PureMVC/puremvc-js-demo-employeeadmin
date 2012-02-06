@@ -2,14 +2,14 @@
  * @lends Puremvc.demo.controller.PrepControllerCommand.prototype
  */
 Ext.namespace('Puremvc.demo.controller');
-Puremvc.demo.controller.PrepControllerCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.PrepControllerCommand = Ext.extend(puremvc.AsyncCommand, {
   /**
    * @class <code>AsyncCommand</code> subclass that is
    * responsible for preparing the data <code>Model</code>.
    * This is where all <code>Proxy</code> subclasses are
    * registered with the <code>Model</code>.
    *
-   * @extends Puremvc.patterns.AsyncCommand
+   * @extends puremvc.AsyncCommand
    *
    * @author Tony DeFusco
    *

@@ -9,7 +9,7 @@
  * @lends Puremvc.demo.controller.PrepViewCommand.prototype
  */
 Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.StartupCommand = Ext.extend(Puremvc.patterns.AsyncMacroCommand, {
+Puremvc.demo.controller.StartupCommand = Ext.extend(puremvc.AsyncMacroCommand, {
   /**
    * Add the Subcommands to startup the PureMVC apparatus.
    *

@@ -9,7 +9,7 @@
  * @lends Puremvc.demo.ApplicationFacade.prototype
  */
 Ext.ns('Puremvc.demo');
-Puremvc.demo.ApplicationFacade = Ext.extend(Puremvc.patterns.Facade,
+Puremvc.demo.ApplicationFacade = Ext.extend(puremvc.Facade,
 {
   /**
    * @class <p>
@@ -35,7 +35,7 @@ Puremvc.demo.ApplicationFacade = Ext.extend(Puremvc.patterns.Facade,
    * use." For more information on creating the concrete Facade, see page
    * 11 in "Implementation Idioms and Best Practices" by Cliff Hall.
    * </p>
-   * @extends Puremvc.patterns.Facade
+   * @extends puremvc.Facade
    *
    * @param {string} key The multiton key.
    *
@@ -170,10 +170,10 @@ Ext.apply(Puremvc.demo.ApplicationFacade, {
    * used throughout the application.
    */
   getInstance: function(key /* string */) {
-    if (!Puremvc.patterns.Facade.hasCore(key)) {
+    if (!puremvc.Facade.hasCore(key)) {
       new Puremvc.demo.ApplicationFacade(key);
     }
-    var retVal = Puremvc.patterns.Facade.getInstance(key);
+    var retVal = puremvc.Facade.getInstance(key);
     return retVal;
   }
 });

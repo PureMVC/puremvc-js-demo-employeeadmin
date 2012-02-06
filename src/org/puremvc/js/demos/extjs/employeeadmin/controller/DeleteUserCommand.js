@@ -9,7 +9,7 @@
  * @lends Puremvc.demo.controller.DeleteUserCommand.prototype
  */
 Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.DeleteUserCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.DeleteUserCommand = Ext.extend(puremvc.AsyncCommand, {
   execute: function(notification/*INotification*/) {
     var user/*UserVO*/ = notification.getBody();
 
