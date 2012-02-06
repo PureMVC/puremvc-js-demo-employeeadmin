@@ -7,8 +7,8 @@
 /**
  * @lends Puremvc.demo.view.components.RolePanel.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
-Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
+Ext.namespace("Puremvc.demo.view.components");
+Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.grid.GridPanel, {
 
   /**
    * The currently displayed user roles.
@@ -105,39 +105,37 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
           }
         ]
       },
-      items: [
+      hideHeaders: true,
+      frame: true,
+      store: new Ext.data.Store({
+        // store configs
+        autoDestroy: true,
+        storeId: "userRolesStore",
+        // reader configs
+        idIndex: 1,
+        fields: [
+          {name: "value", type: "string"},
+          {name: "ordinal", type: "int"},
+          {name: "associatedValue", type: "auto"}
+        ]
+      }),
+      columns: [
         {
-          xtype: "listview",
-          id: "userRoleList",
-          multiSelect: false,
-          singleSelect: true,
-          hideHeaders: true,
-          frame: false,
-          store: new Ext.data.Store({
-            // store configs
-            autoDestroy: true,
-            storeId: "userRolesStore",
-            // reader configs
-            idIndex: 1,
-            fields: [
-              {name: "value", type: "string"},
-              {name: "ordinal", type: "int"},
-              {name: "associatedValue", type: "auto"}
-            ]
-          }),
-          columns: [
-            {
-              dataIndex: "value"
-            }
-          ],
-          listeners: {
-            "selectionchange": {
-              fn: this.userRoleList_changeHandler,
-              scope: this
-            }
+          dataIndex: "value"
+        }
+      ],
+      selModel: new Ext.grid.RowSelectionModel({
+        singleSelect: true,
+        listeners: {
+          "selectionchange": {
+            fn: this.userRoleList_changeHandler,
+            scope: this
           }
         }
-      ]
+      }),
+      view: new Ext.grid.GridView({
+        forceFit: true
+      })
     };
     Ext.apply(this, config);
     this.initialConfig = Ext.apply({}, config);
@@ -180,8 +178,7 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
     userRoles = userRoles || [];
 
     /* First clear out any existing roles. */
-    var roleList = this.get("userRoleList");
-    var store = roleList.getStore();
+    var store = this.getStore();
     store.removeAll(false); // true -> Don't fire the 'clear' event.
 
     // Load the rolelist with data from the role enum list.
@@ -208,20 +205,18 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
   },
 
   getSelectedUserRole: function() {
-    var userRoleListView = this.get("userRoleList");
-    var selectedRecords = userRoleListView.getSelectedRecords();
+    var selectedRecords = this.selModel.getSelections();
     var selectedRecord = (selectedRecords.length > 0) ? selectedRecords[0] : null;
     var retVal = (selectedRecord != null) ? selectedRecord.get("associatedValue") : null;
     return retVal;
   },
 
   setSelectedUserRoleValue: function(value/*Number*/) {
-    var userRoleListView = this.get("userRoleList");
     if (value == -1) {
-      userRoleListView.clearSelections();
+      this.selModel.clearSelections();
     }
     else {
-      userRoleListView.select(value, false);
+      this.selModel.selectRow(value, false);
     }
   },
 
@@ -237,8 +232,7 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
       control.setDisabled(flag);
     }
 
-    var userRoleList = this.get("userRoleList");
-    userRoleList.setDisabled(flag);
+    this.setDisabled(flag);
 
     if (flag) {
       this.setSelectedRoleValue(-1);

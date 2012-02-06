@@ -8,12 +8,10 @@
 /**
  * @lends Puremvc.demo.controller.PrepModelCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.PrepModelCommand = Ext.extend(puremvc.AsyncCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.PrepModelCommand = Ext.extend(puremvc.SimpleCommand, {
   execute: function(notification/*INotification*/) {
     this.facade.registerProxy(new Puremvc.demo.model.UserProxy());
     this.facade.registerProxy(new Puremvc.demo.model.RoleProxy());
-
-    this.commandComplete();
   }
 });

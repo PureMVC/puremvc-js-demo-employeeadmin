@@ -8,7 +8,7 @@
 /**
  * @lends Puremvc.demo.model.UserProxy.prototype
  */
-Ext.ns("Puremvc.demo.model");
+Ext.namespace("Puremvc.demo.model");
 Puremvc.demo.model.UserProxy = Ext.extend(puremvc.Proxy, {
 
   /**

@@ -8,7 +8,7 @@
 /**
  * @lends Puremvc.demo.ApplicationFacade.prototype
  */
-Ext.ns('Puremvc.demo');
+Ext.namespace("Puremvc.demo");
 Puremvc.demo.ApplicationFacade = Ext.extend(puremvc.Facade,
 {
   /**

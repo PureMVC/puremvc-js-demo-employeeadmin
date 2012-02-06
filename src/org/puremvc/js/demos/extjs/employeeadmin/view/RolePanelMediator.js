@@ -8,7 +8,7 @@
 /**
  * @lends Puremvc.demo.view.RolePanelMediator.prototype
  */
-Ext.ns("Puremvc.demo.view");
+Ext.namespace("Puremvc.demo.view");
 Puremvc.demo.view.RolePanelMediator = Ext.extend(puremvc.Mediator, {
   /**
    * Constructor

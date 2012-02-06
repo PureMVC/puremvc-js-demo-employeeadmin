@@ -7,7 +7,7 @@
 /**
  * @lends Puremvc.demo.view.components.UserForm.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
+Ext.namespace("Puremvc.demo.view.components");
 Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
 
   /**
@@ -86,8 +86,7 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               fn: this.field_focusHandler,
               scope: this
             }
-          },
-          itemCls: "required"
+          }
         },
         {
           xtype: "textfield",
@@ -100,8 +99,7 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               fn: this.field_focusHandler,
               scope: this
             }
-          },
-          itemCls: "required"
+          }
         },
         {
           xtype: "textfield",
@@ -114,8 +112,7 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               fn: this.field_focusHandler,
               scope: this
             }
-          },
-          itemCls: "required"
+          }
         },
         {
           xtype: "combo",
@@ -146,10 +143,10 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               {name: "ordinal", type: "int"},
               {name: "associatedValue", type: "auto"}
             ]
-          }),
-          itemCls: "required"
+          })
         }
-      ]
+      ],
+      labelWidth: 120
     };
     Ext.apply(this, config);
     this.initialConfig = Ext.apply({}, config);
@@ -166,6 +163,14 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
     // Erase any pre-existing form information.
     this.clearForm();
     this.setEnabled(false);
+
+    // Add required indicator to the appropriate fields.
+    Puremvc.demo.common.Util.addRequiredToFieldLabel([
+      this.findById("uname"),
+      this.findById("password"),
+      this.findById("confirm"),
+      this.findById("department")
+    ]);
   },
 
   getSelectedDept: function() {

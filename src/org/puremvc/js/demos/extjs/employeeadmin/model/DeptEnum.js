@@ -8,7 +8,7 @@
 /**
  * @lends Puremvc.demo.model.DeptEnum.prototype
  */
-Ext.ns("Puremvc.demo.model");
+Ext.namespace("Puremvc.demo.model");
 Puremvc.demo.model.DeptEnum = Ext.extend(Object, {
   /**
    *

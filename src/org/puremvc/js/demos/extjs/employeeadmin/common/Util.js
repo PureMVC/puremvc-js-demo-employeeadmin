@@ -26,6 +26,28 @@ Puremvc.demo.common.Util = {
       buttons: Ext.MessageBox.OK,
       icon: Ext.MessageBox.INFO
     });
+  },
+
+  /**
+   * Add the required label to the given field or fields.
+   *
+   * @param an individual field or array of fields.
+   */
+  addRequiredToFieldLabel: function(field) {
+    var fields = [].concat(field);
+    Ext.each(fields, function(item, index, allItems) {
+      item.mon(item, "afterrender", function () {
+        var formItem = this.el.up(".x-form-item", 10);
+
+        if (formItem) {
+          var label = formItem.child(".x-form-item-label");
+
+          if (label) {
+            Ext.get(label).addClass("required");
+          }
+        }
+      }, item);
+    }, field);
   }
 };
 

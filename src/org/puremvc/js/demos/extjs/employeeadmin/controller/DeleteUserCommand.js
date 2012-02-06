@@ -8,8 +8,8 @@
 /**
  * @lends Puremvc.demo.controller.DeleteUserCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.DeleteUserCommand = Ext.extend(puremvc.AsyncCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.DeleteUserCommand = Ext.extend(puremvc.SimpleCommand, {
   execute: function(notification/*INotification*/) {
     var user/*UserVO*/ = notification.getBody();
 
@@ -20,7 +20,5 @@ Puremvc.demo.controller.DeleteUserCommand = Ext.extend(puremvc.AsyncCommand, {
     roleProxy.deleteItem(user);
 
     this.sendNotification(Puremvc.demo.ApplicationFacade.USER_DELETED);
-
-    this.commandComplete();
   }
 });

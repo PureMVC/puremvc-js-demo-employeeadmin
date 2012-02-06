@@ -8,7 +8,7 @@
 /**
  * @lends Puremvc.demo.view.UserFormMediator.prototype
  */
-Ext.ns("Puremvc.demo.view");
+Ext.namespace("Puremvc.demo.view");
 Puremvc.demo.view.UserFormMediator = Ext.extend(puremvc.Mediator, {
 
   /**

@@ -8,16 +8,14 @@
 /**
  * @lends Puremvc.demo.controller.AddRoleResultCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
+Ext.namespace("Puremvc.demo.controller");
 
-Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(puremvc.AsyncCommand, {
+Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(puremvc.SimpleCommand, {
   execute: function(notification/*INotification*/) {
     var result/*Boolean*/ = notification.getBody();
 
     if (result === false) {
       Puremvc.demo.common.Util.alert("Role already exists for this user!", "Add User Role");
     }
-
-    this.commandComplete();
   }
 });
