@@ -2280,9 +2280,9 @@ Ext.define("Puremvc.demo.view.ApplicationMediator", {
    * the <code>Notification</code> is listed in the <code>listNotificationInterests()</code>
    * return value.
    *
-   * @param {Puremvc.patterns.Notification} notification the notification to act upon.
+   * @param {puremvc.Notification} notification the notification to act upon.
    */
-  handleNotification: function(notification /* Puremvc.patterns.Notification */) {
+  handleNotification: function(notification /* puremvc.Notification */) {
     switch (notification.getName()) {
       default:
         break;
