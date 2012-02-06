@@ -1169,6 +1169,7 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.grid.GridPanel, {
   initComponent: function() {
     var config = {
       title: "User Roles",
+      bodyCssCls: "grid-background",
       fbar: {
         buttonAlign: "right",
         items: [
@@ -1356,7 +1357,7 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.grid.GridPanel, {
       control.setDisabled(flag);
     }
 
-    this.setDisabled(flag);
+//    this.setDisabled(flag);
 
     if (flag) {
       this.setSelectedRoleValue(-1);
@@ -1985,6 +1986,7 @@ Puremvc.demo.view.components.UserList = Ext.extend(Ext.grid.GridPanel, {
   initComponent: function() {
     var config = {
       title: "Users",
+      bodyCls: "grid-background",
       frame: true,
       stripeRows: true,
       buttons: [

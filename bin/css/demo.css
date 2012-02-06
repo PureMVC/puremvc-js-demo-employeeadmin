@@ -16,3 +16,15 @@
   background: url("../images/demo/required_field.gif") no-repeat;
   background-position: right;
 }
+
+.x-grid3-scroller {
+  background-color: rgb(223, 233, 246) !important;
+}
+
+.x-grid3-row {
+  background-color: rgb(255, 255, 255) !important;
+}
+
+.x-grid3-row-alt {
+  background-color: #fafafa !important;
+}
