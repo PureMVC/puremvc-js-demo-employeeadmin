@@ -7,8 +7,8 @@
 /**
  * @lends Puremvc.demo.view.components.RolePanel.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
-Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
+Ext.namespace("Puremvc.demo.view.components");
+Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.grid.GridPanel, {
 
   /**
    * The currently displayed user roles.
@@ -45,78 +45,25 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
   initComponent: function() {
     var config = {
       title: "User Roles",
-      fbar: {
-        buttonAlign: "right",
-        items: [
-          {
-            xtype: "combo",
-            id: "roleList",
-            valueField: "ordinal",
-            displayField: "value",
-            typeAhead: true,
-            mode: "local",
-            forceSelection: true,
-            triggerAction: "all",
-            selectOnFocus: true,
-            hiddenName: "roleListField",
-            hiddenId: "roleListHidden",
-            width: 135,
-            store: new Ext.data.ArrayStore({
-              // store configs
-              autoDestroy: true,
-              storeId: "rolesStore",
-              // reader configs
-              idIndex: 1,
-              fields: [
-                {name: "value", type: "string"},
-                {name: "ordinal", type: "int"},
-                {name: "associatedValue", type: "auto"}
-              ]
-            }),
-            listeners: {
-              "select": {
-                fn: this.roleList_changeHandler,
-                scope: this
-              }
-            }
-          },
-          {
-            xtype: "tbbutton",
-            id: "addRoleButton",
-            text: "Add",
-            listeners: {
-              "click": {
-                fn: this.addRoleButton_clickHandler,
-                scope: this
-              }
-            }
-          },
-          {xtype: "tbspacer"},
-          {
-            xtype: "tbbutton",
-            id: "removeRoleButton",
-            text: "Remove",
-            listeners: {
-              "click": {
-                fn: this.removeRoleButton_clickHandler,
-                scope: this
-              }
-            }
-          }
-        ]
-      },
-      items: [
+      bodyCssCls: "grid-background",
+      buttons: [
         {
-          xtype: "listview",
-          id: "userRoleList",
-          multiSelect: false,
-          singleSelect: true,
-          hideHeaders: true,
-          frame: false,
-          store: new Ext.data.Store({
+          xtype: "combo",
+          id: "roleList",
+          valueField: "ordinal",
+          displayField: "value",
+          typeAhead: true,
+          mode: "local",
+          forceSelection: true,
+          triggerAction: "all",
+          selectOnFocus: true,
+          hiddenName: "roleListField",
+          hiddenId: "roleListHidden",
+          width: 135,
+          store: new Ext.data.ArrayStore({
             // store configs
             autoDestroy: true,
-            storeId: "userRolesStore",
+            storeId: "rolesStore",
             // reader configs
             idIndex: 1,
             fields: [
@@ -125,19 +72,67 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
               {name: "associatedValue", type: "auto"}
             ]
           }),
-          columns: [
-            {
-              dataIndex: "value"
-            }
-          ],
           listeners: {
-            "selectionchange": {
-              fn: this.userRoleList_changeHandler,
+            "select": {
+              fn: this.roleList_changeHandler,
+              scope: this
+            }
+          }
+        },
+        {
+          xtype: "tbbutton",
+          id: "addRoleButton",
+          text: "Add",
+          listeners: {
+            "click": {
+              fn: this.addRoleButton_clickHandler,
+              scope: this
+            }
+          }
+        },
+        {
+          xtype: "tbbutton",
+          id: "removeRoleButton",
+          text: "Remove",
+          listeners: {
+            "click": {
+              fn: this.removeRoleButton_clickHandler,
               scope: this
             }
           }
         }
-      ]
+      ],
+      hideHeaders: true,
+      frame: true,
+      store: new Ext.data.Store({
+        // store configs
+        autoDestroy: true,
+        storeId: "userRolesStore",
+        // reader configs
+        idIndex: 1,
+        fields: [
+          {name: "value", type: "string"},
+          {name: "ordinal", type: "int"},
+          {name: "associatedValue", type: "auto"}
+        ]
+      }),
+      columns: [
+        {
+          dataIndex: "value"
+        }
+      ],
+      selModel: new Ext.grid.RowSelectionModel({
+        singleSelect: true,
+        listeners: {
+          "selectionchange": {
+            fn: this.userRoleList_changeHandler,
+            scope: this
+          }
+        }
+      }),
+      view: new Ext.grid.GridView({
+        forceFit: true
+      })
     };
     Ext.apply(this, config);
     this.initialConfig = Ext.apply({}, config);
@@ -180,8 +175,7 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
     userRoles = userRoles || [];
 
     /* First clear out any existing roles. */
-    var roleList = this.get("userRoleList");
-    var store = roleList.getStore();
+    var store = this.getStore();
     store.removeAll(false); // true -> Don't fire the 'clear' event.
 
     // Load the rolelist with data from the role enum list.
@@ -208,20 +202,18 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
   },
 
   getSelectedUserRole: function() {
-    var userRoleListView = this.get("userRoleList");
-    var selectedRecords = userRoleListView.getSelectedRecords();
+    var selectedRecords = this.selModel.getSelections();
     var selectedRecord = (selectedRecords.length > 0) ? selectedRecords[0] : null;
     var retVal = (selectedRecord != null) ? selectedRecord.get("associatedValue") : null;
     return retVal;
   },
 
   setSelectedUserRoleValue: function(value/*Number*/) {
-    var userRoleListView = this.get("userRoleList");
     if (value == -1) {
-      userRoleListView.clearSelections();
+      this.selModel.clearSelections();
     }
     else {
-      userRoleListView.select(value, false);
+      this.selModel.selectRow(value, false);
     }
   },
 
@@ -237,8 +229,7 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
       control.setDisabled(flag);
     }
 
-    var userRoleList = this.get("userRoleList");
-    userRoleList.setDisabled(flag);
+//    this.setDisabled(flag);
 
     if (flag) {
       this.setSelectedRoleValue(-1);

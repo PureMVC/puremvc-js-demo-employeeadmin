@@ -1,15 +1,15 @@
 /**
  * @lends Puremvc.demo.controller.PrepControllerCommand.prototype
  */
-Ext.namespace('Puremvc.demo.controller');
-Puremvc.demo.controller.PrepControllerCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.PrepControllerCommand = Ext.extend(puremvc.SimpleCommand, {
   /**
-   * @class <code>AsyncCommand</code> subclass that is
+   * @class <code>SimpleCommand</code> subclass that is
    * responsible for preparing the data <code>Model</code>.
    * This is where all <code>Proxy</code> subclasses are
    * registered with the <code>Model</code>.
    *
-   * @extends Puremvc.patterns.AsyncCommand
+   * @extends puremvc.SimpleCommand
    *
    * @author Tony DeFusco
    *
@@ -23,7 +23,5 @@ Puremvc.demo.controller.PrepControllerCommand = Ext.extend(Puremvc.patterns.Asyn
     // Register all of the non-system commands used by the application.
     this.facade.registerCommand(Puremvc.demo.ApplicationFacade.ADD_ROLE_RESULT, Puremvc.demo.controller.AddRoleResultCommand);
     this.facade.registerCommand(Puremvc.demo.ApplicationFacade.DELETE_USER, Puremvc.demo.controller.DeleteUserCommand);
-
-    this.commandComplete();
   }
 });

@@ -8,8 +8,8 @@
 /**
  * @lends Puremvc.demo.model.RoleProxy.prototype
  */
-Ext.ns("Puremvc.demo.model");
-Puremvc.demo.model.RoleProxy = Ext.extend(Puremvc.patterns.Proxy, {
+Ext.namespace("Puremvc.demo.model");
+Puremvc.demo.model.RoleProxy = Ext.extend(puremvc.Proxy, {
 
   /**
    * Constructor

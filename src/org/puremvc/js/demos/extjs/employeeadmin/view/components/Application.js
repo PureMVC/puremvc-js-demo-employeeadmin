@@ -8,7 +8,7 @@
 /**
  * @lends Puremvc.demo.view.components.Application.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
+Ext.namespace("Puremvc.demo.view.components");
 Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
   /**
    * @class Serves as the main application's View.  All
@@ -21,9 +21,10 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
   constructor: function(config) {
     config = Ext.apply({
       id: "applicationViewport",
-      layout: "fit",
+      layout: {
+        type: "fit"
+      },
       defaults: {
-        border: false,
         frame: true
       },
       items: [
@@ -31,12 +32,11 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
           xtype: "panel",
           id: "viewPortCenterRegion",
           region: "center",
-          layout: "vbox",
-          layoutConfig: {
+          layout: {
+            type: "vbox",
             align: "center",
             pack: "start"
           },
-          hideBorders: true,
           defaults: {
             frame: false
           },
@@ -47,29 +47,27 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
               items: [
                 {
                   xtype: "label",
-                  html: "<span class=\"application-name\">Employee Admin</span>&nbsp;<span class=\"application-category\">PureMVC JavaScript/ExtJS Demo</span>",
-                  flex: 1
+                  html: "<span class=\"application-name\">Employee Admin</span>&nbsp;<span class=\"application-category\">PureMVC JavaScript/ExtJS3 Demo</span>"
                 }
-              ]
+              ],
+              flex: 0
             },
             {
               xtype: "x-demo-user-list-panel",
               id: "userList",
               width: 650,
-              height: 250,
               flex: 1
             },
             {
               xtype: "panel",
               id: "userInformationPanel",
-              layout: "hbox",
-              width: 650,
-              height: 300,
-              flex: 1,
-              layoutConfig: {
-                align: "stretchmax",
+              layout: {
+                type: "hbox",
+                align: "stretch",
                 pack: "start"
               },
+              width: 650,
+              flex: 1,
               defaults: {
                 frame: true
               },

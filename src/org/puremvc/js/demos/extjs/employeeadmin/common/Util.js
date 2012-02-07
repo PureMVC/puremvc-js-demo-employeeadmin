@@ -26,6 +26,45 @@ Puremvc.demo.common.Util = {
       buttons: Ext.MessageBox.OK,
       icon: Ext.MessageBox.INFO
     });
+  },
+
+  /**
+   * Add the required label to the given field or fields.
+   *
+   * @param an individual field or array of fields.
+   */
+  addRequiredToFieldLabel: function(field) {
+    var fields = [].concat(field);
+    Ext.each(fields, function(item, index, allItems) {
+      item.mon(item, "afterrender", function () {
+        var formItem = this.el.up(".x-form-item", 10);
+
+        if (formItem) {
+          var label = formItem.child(".x-form-item-label");
+
+          if (label) {
+            Ext.get(label).addClass("required");
+          }
+        }
+      }, item);
+    }, field);
+  },
+
+  /**
+   * Shared routine to enable or disable the label of a form control.
+   *
+   * @param control the control whose label is to be disabled/enabled.
+   * @param flag true to disable, false to enable.
+   */
+  disableLabel: function(control, flag) {
+    if (control.label) {
+      if (flag) {
+        control.label.addClass("x-item-disabled");
+      }
+      else {
+        control.label.removeClass("x-item-disabled");
+      }
+    }
   }
 };
 

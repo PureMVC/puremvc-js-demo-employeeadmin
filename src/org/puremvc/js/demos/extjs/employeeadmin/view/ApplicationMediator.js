@@ -9,7 +9,7 @@
  * @lends Puremvc.demo.view.ApplicationMediator.prototype
  */
 Ext.namespace('Puremvc.demo.view');
-Puremvc.demo.view.ApplicationMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Puremvc.demo.view.ApplicationMediator = Ext.extend(puremvc.Mediator, {
   /**
    * A named shortcut to the <code>Application</code> instance.  This
    * prevents us from having to reference the more
@@ -27,7 +27,7 @@ Puremvc.demo.view.ApplicationMediator = Ext.extend(Puremvc.patterns.Mediator, {
    *
    * @param {Puremvc.demo.view.components.Application} viewComponent the view component to register with the <code>ApplicationMediator</code>.
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    *
    * @see Puremvc.demo.view.components.Application
    *
@@ -59,9 +59,9 @@ Puremvc.demo.view.ApplicationMediator = Ext.extend(Puremvc.patterns.Mediator, {
    * the <code>Notification</code> is listed in the <code>listNotificationInterests()</code>
    * return value.
    *
-   * @param {Puremvc.patterns.Notification} notification the notification to act upon.
+   * @param {puremvc.Notification} notification the notification to act upon.
    */
-  handleNotification: function(notification /* Puremvc.patterns.Notification */) {
+  handleNotification: function(notification /* puremvc.Notification */) {
     switch (notification.getName()) {
       default:
         break;

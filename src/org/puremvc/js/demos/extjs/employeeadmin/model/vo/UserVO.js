@@ -8,7 +8,7 @@
 /**
  * @lends Puremvc.demo.model.vo.UserVO.prototype
  */
-Ext.ns("Puremvc.demo.model.vo");
+Ext.namespace("Puremvc.demo.model.vo");
 Puremvc.demo.model.vo.UserVO = Ext.extend(Object, {
   /**
    * Constructor

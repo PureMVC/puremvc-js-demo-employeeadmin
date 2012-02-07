@@ -7,7 +7,7 @@
 /**
  * @lends Puremvc.demo.view.components.UserList.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
+Ext.namespace("Puremvc.demo.view.components");
 Puremvc.demo.view.components.UserList = Ext.extend(Ext.grid.GridPanel, {
 
   /**
@@ -33,6 +33,7 @@ Puremvc.demo.view.components.UserList = Ext.extend(Ext.grid.GridPanel, {
   initComponent: function() {
     var config = {
       title: "Users",
+      bodyCssCls: "grid-background",
       frame: true,
       stripeRows: true,
       buttons: [

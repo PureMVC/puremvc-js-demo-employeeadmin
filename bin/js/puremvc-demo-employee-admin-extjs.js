@@ -8,8 +8,8 @@
 /**
  * @lends Puremvc.demo.ApplicationFacade.prototype
  */
-Ext.ns('Puremvc.demo');
-Puremvc.demo.ApplicationFacade = Ext.extend(Puremvc.patterns.Facade,
+Ext.namespace("Puremvc.demo");
+Puremvc.demo.ApplicationFacade = Ext.extend(puremvc.Facade,
 {
   /**
    * @class <p>
@@ -35,14 +35,16 @@ Puremvc.demo.ApplicationFacade = Ext.extend(Puremvc.patterns.Facade,
    * use." For more information on creating the concrete Facade, see page
    * 11 in "Implementation Idioms and Best Practices" by Cliff Hall.
    * </p>
-   * @extends Puremvc.patterns.Facade
+   * @extends puremvc.Facade
+   *
+   * @param {string} key The multiton key.
    *
    * @author Tony DeFusco
    *
    * @constructs
    */
-  constructor: function() {
-    Puremvc.demo.ApplicationFacade.superclass.constructor.call(this);
+  constructor: function(key /* string */) {
+    Puremvc.demo.ApplicationFacade.superclass.constructor.call(this, key);
   },
 
   /**
@@ -162,14 +164,17 @@ Ext.apply(Puremvc.demo.ApplicationFacade, {
    * Your Singleton implementation is up to you.  This provides an example
    * that is compatible with JSDoc and most editors' code assistance.
    *
+   * @param {string} key The multiton key.
+   *
    * @return {Puremvc.demo.ApplicationFacade} the <code>Facade</code> subclass instance
    * used throughout the application.
    */
-  getInstance: function() {
-    if (Puremvc.patterns.Facade._instance == undefined) {
-      Puremvc.patterns.Facade._instance = new Puremvc.demo.ApplicationFacade();
+  getInstance: function(key /* string */) {
+    if (!puremvc.Facade.hasCore(key)) {
+      new Puremvc.demo.ApplicationFacade(key);
     }
-    return Puremvc.patterns.Facade._instance;
+    var retVal = puremvc.Facade.getInstance(key);
+    return retVal;
   }
 });
 /*
@@ -200,6 +205,45 @@ Puremvc.demo.common.Util = {
       buttons: Ext.MessageBox.OK,
       icon: Ext.MessageBox.INFO
     });
+  },
+
+  /**
+   * Add the required label to the given field or fields.
+   *
+   * @param an individual field or array of fields.
+   */
+  addRequiredToFieldLabel: function(field) {
+    var fields = [].concat(field);
+    Ext.each(fields, function(item, index, allItems) {
+      item.mon(item, "afterrender", function () {
+        var formItem = this.el.up(".x-form-item", 10);
+
+        if (formItem) {
+          var label = formItem.child(".x-form-item-label");
+
+          if (label) {
+            Ext.get(label).addClass("required");
+          }
+        }
+      }, item);
+    }, field);
+  },
+
+  /**
+   * Shared routine to enable or disable the label of a form control.
+   *
+   * @param control the control whose label is to be disabled/enabled.
+   * @param flag true to disable, false to enable.
+   */
+  disableLabel: function(control, flag) {
+    if (control.label) {
+      if (flag) {
+        control.label.addClass("x-item-disabled");
+      }
+      else {
+        control.label.removeClass("x-item-disabled");
+      }
+    }
   }
 };
 
@@ -214,17 +258,15 @@ Puremvc.demo.common.Util = {
 /**
  * @lends Puremvc.demo.controller.AddRoleResultCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
+Ext.namespace("Puremvc.demo.controller");
 
-Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(puremvc.SimpleCommand, {
   execute: function(notification/*INotification*/) {
     var result/*Boolean*/ = notification.getBody();
 
     if (result === false) {
       Puremvc.demo.common.Util.alert("Role already exists for this user!", "Add User Role");
     }
-
-    this.commandComplete();
   }
 });
 
@@ -238,8 +280,8 @@ Puremvc.demo.controller.AddRoleResultCommand = Ext.extend(Puremvc.patterns.Async
 /**
  * @lends Puremvc.demo.controller.DeleteUserCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.DeleteUserCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.DeleteUserCommand = Ext.extend(puremvc.SimpleCommand, {
   execute: function(notification/*INotification*/) {
     var user/*UserVO*/ = notification.getBody();
 
@@ -250,23 +292,21 @@ Puremvc.demo.controller.DeleteUserCommand = Ext.extend(Puremvc.patterns.AsyncCom
     roleProxy.deleteItem(user);
 
     this.sendNotification(Puremvc.demo.ApplicationFacade.USER_DELETED);
-
-    this.commandComplete();
   }
 });
 
 /**
  * @lends Puremvc.demo.controller.PrepControllerCommand.prototype
  */
-Ext.namespace('Puremvc.demo.controller');
-Puremvc.demo.controller.PrepControllerCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.PrepControllerCommand = Ext.extend(puremvc.SimpleCommand, {
   /**
-   * @class <code>AsyncCommand</code> subclass that is
+   * @class <code>SimpleCommand</code> subclass that is
    * responsible for preparing the data <code>Model</code>.
    * This is where all <code>Proxy</code> subclasses are
    * registered with the <code>Model</code>.
    *
-   * @extends Puremvc.patterns.AsyncCommand
+   * @extends puremvc.SimpleCommand
    *
    * @author Tony DeFusco
    *
@@ -280,8 +320,6 @@ Puremvc.demo.controller.PrepControllerCommand = Ext.extend(Puremvc.patterns.Asyn
     // Register all of the non-system commands used by the application.
     this.facade.registerCommand(Puremvc.demo.ApplicationFacade.ADD_ROLE_RESULT, Puremvc.demo.controller.AddRoleResultCommand);
     this.facade.registerCommand(Puremvc.demo.ApplicationFacade.DELETE_USER, Puremvc.demo.controller.DeleteUserCommand);
-
-    this.commandComplete();
   }
 });
 
@@ -295,13 +333,11 @@ Puremvc.demo.controller.PrepControllerCommand = Ext.extend(Puremvc.patterns.Asyn
 /**
  * @lends Puremvc.demo.controller.PrepModelCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.PrepModelCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.PrepModelCommand = Ext.extend(puremvc.SimpleCommand, {
   execute: function(notification/*INotification*/) {
     this.facade.registerProxy(new Puremvc.demo.model.UserProxy());
     this.facade.registerProxy(new Puremvc.demo.model.RoleProxy());
-
-    this.commandComplete();
   }
 });
 
@@ -315,8 +351,8 @@ Puremvc.demo.controller.PrepModelCommand = Ext.extend(Puremvc.patterns.AsyncComm
 /**
  * @lends Puremvc.demo.controller.PrepViewCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.PrepViewCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.PrepViewCommand = Ext.extend(puremvc.SimpleCommand, {
   execute: function(notification/*INotification*/) {
     // Create the Application component.
     var app = new Puremvc.demo.view.components.Application({});
@@ -324,8 +360,6 @@ Puremvc.demo.controller.PrepViewCommand = Ext.extend(Puremvc.patterns.AsyncComma
     // Register the ApplicationMediator passing the Application
     // instance to its constructor.
     this.facade.registerMediator(new Puremvc.demo.view.ApplicationMediator(app));
-
-    this.commandComplete();
   }
 });
 
@@ -339,8 +373,8 @@ Puremvc.demo.controller.PrepViewCommand = Ext.extend(Puremvc.patterns.AsyncComma
 /**
  * @lends Puremvc.demo.controller.PrepViewCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.StartupCommand = Ext.extend(Puremvc.patterns.AsyncMacroCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.StartupCommand = Ext.extend(puremvc.MacroCommand, {
   /**
    * Add the Subcommands to startup the PureMVC apparatus.
    *
@@ -348,7 +382,7 @@ Puremvc.demo.controller.StartupCommand = Ext.extend(Puremvc.patterns.AsyncMacroC
    * followed by preparation of the View (mostly the registering of
    * Mediators).
    */
-  initializeAsyncMacroCommand: function(note/*INotification*/) {
+  initializeMacroCommand: function(note/*INotification*/) {
     this.addSubCommand(Puremvc.demo.controller.PrepControllerCommand);
     this.addSubCommand(Puremvc.demo.controller.PrepModelCommand);
     this.addSubCommand(Puremvc.demo.controller.PrepViewCommand);
@@ -365,7 +399,7 @@ Puremvc.demo.controller.StartupCommand = Ext.extend(Puremvc.patterns.AsyncMacroC
 /**
  * @lends Puremvc.demo.model.vo.RoleVO.prototype
  */
-Ext.ns("Puremvc.demo.model.vo");
+Ext.namespace("Puremvc.demo.model.vo");
 Puremvc.demo.model.vo.RoleVO = Ext.extend(Object, {
 
   /**
@@ -399,7 +433,7 @@ Puremvc.demo.model.vo.RoleVO = Ext.extend(Object, {
 /**
  * @lends Puremvc.demo.model.vo.UserVO.prototype
  */
-Ext.ns("Puremvc.demo.model.vo");
+Ext.namespace("Puremvc.demo.model.vo");
 Puremvc.demo.model.vo.UserVO = Ext.extend(Object, {
   /**
    * Constructor
@@ -473,7 +507,7 @@ Puremvc.demo.model.vo.UserVO = Ext.extend(Object, {
 /**
  * @lends Puremvc.demo.model.DeptEnum.prototype
  */
-Ext.ns("Puremvc.demo.model");
+Ext.namespace("Puremvc.demo.model");
 Puremvc.demo.model.DeptEnum = Ext.extend(Object, {
   /**
    *
@@ -566,7 +600,7 @@ Ext.apply(Puremvc.demo.model.DeptEnum, {
 /**
  * @lends Puremvc.demo.model.RoleEnum.prototype
  */
-Ext.ns("Puremvc.demo.model");
+Ext.namespace("Puremvc.demo.model");
 Puremvc.demo.model.RoleEnum = Ext.extend(Object, {
   constructor: function(value/*String*/, ordinal/*int*/) {
     Puremvc.demo.model.RoleEnum.superclass.constructor.call(this);
@@ -733,8 +767,8 @@ Ext.apply(Puremvc.demo.model.RoleEnum, {
 /**
  * @lends Puremvc.demo.model.RoleProxy.prototype
  */
-Ext.ns("Puremvc.demo.model");
-Puremvc.demo.model.RoleProxy = Ext.extend(Puremvc.patterns.Proxy, {
+Ext.namespace("Puremvc.demo.model");
+Puremvc.demo.model.RoleProxy = Ext.extend(puremvc.Proxy, {
 
   /**
    * Constructor
@@ -932,8 +966,8 @@ Ext.apply(Puremvc.demo.model.RoleProxy, {
 /**
  * @lends Puremvc.demo.model.UserProxy.prototype
  */
-Ext.ns("Puremvc.demo.model");
-Puremvc.demo.model.UserProxy = Ext.extend(Puremvc.patterns.Proxy, {
+Ext.namespace("Puremvc.demo.model");
+Puremvc.demo.model.UserProxy = Ext.extend(puremvc.Proxy, {
 
   /**
    * Constructor
@@ -1015,7 +1049,7 @@ Ext.apply(Puremvc.demo.model.UserProxy, {
 /**
  * @lends Puremvc.demo.view.components.Application.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
+Ext.namespace("Puremvc.demo.view.components");
 Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
   /**
    * @class Serves as the main application's View.  All
@@ -1028,9 +1062,10 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
   constructor: function(config) {
     config = Ext.apply({
       id: "applicationViewport",
-      layout: "fit",
+      layout: {
+        type: "fit"
+      },
       defaults: {
-        border: false,
         frame: true
       },
       items: [
@@ -1038,12 +1073,11 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
           xtype: "panel",
           id: "viewPortCenterRegion",
           region: "center",
-          layout: "vbox",
-          layoutConfig: {
+          layout: {
+            type: "vbox",
             align: "center",
             pack: "start"
           },
-          hideBorders: true,
           defaults: {
             frame: false
           },
@@ -1054,29 +1088,27 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
               items: [
                 {
                   xtype: "label",
-                  html: "<span class=\"application-name\">Employee Admin</span>&nbsp;<span class=\"application-category\">PureMVC JavaScript/ExtJS Demo</span>",
-                  flex: 1
+                  html: "<span class=\"application-name\">Employee Admin</span>&nbsp;<span class=\"application-category\">PureMVC JavaScript/ExtJS3 Demo</span>"
                 }
-              ]
+              ],
+              flex: 0
             },
             {
               xtype: "x-demo-user-list-panel",
               id: "userList",
               width: 650,
-              height: 250,
               flex: 1
             },
             {
               xtype: "panel",
               id: "userInformationPanel",
-              layout: "hbox",
-              width: 650,
-              height: 300,
-              flex: 1,
-              layoutConfig: {
-                align: "stretchmax",
+              layout: {
+                type: "hbox",
+                align: "stretch",
                 pack: "start"
               },
+              width: 650,
+              flex: 1,
               defaults: {
                 frame: true
               },
@@ -1112,8 +1144,8 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
 /**
  * @lends Puremvc.demo.view.components.RolePanel.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
-Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
+Ext.namespace("Puremvc.demo.view.components");
+Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.grid.GridPanel, {
 
   /**
    * The currently displayed user roles.
@@ -1150,78 +1182,25 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
   initComponent: function() {
     var config = {
       title: "User Roles",
-      fbar: {
-        buttonAlign: "right",
-        items: [
-          {
-            xtype: "combo",
-            id: "roleList",
-            valueField: "ordinal",
-            displayField: "value",
-            typeAhead: true,
-            mode: "local",
-            forceSelection: true,
-            triggerAction: "all",
-            selectOnFocus: true,
-            hiddenName: "roleListField",
-            hiddenId: "roleListHidden",
-            width: 135,
-            store: new Ext.data.ArrayStore({
-              // store configs
-              autoDestroy: true,
-              storeId: "rolesStore",
-              // reader configs
-              idIndex: 1,
-              fields: [
-                {name: "value", type: "string"},
-                {name: "ordinal", type: "int"},
-                {name: "associatedValue", type: "auto"}
-              ]
-            }),
-            listeners: {
-              "select": {
-                fn: this.roleList_changeHandler,
-                scope: this
-              }
-            }
-          },
-          {
-            xtype: "tbbutton",
-            id: "addRoleButton",
-            text: "Add",
-            listeners: {
-              "click": {
-                fn: this.addRoleButton_clickHandler,
-                scope: this
-              }
-            }
-          },
-          {xtype: "tbspacer"},
-          {
-            xtype: "tbbutton",
-            id: "removeRoleButton",
-            text: "Remove",
-            listeners: {
-              "click": {
-                fn: this.removeRoleButton_clickHandler,
-                scope: this
-              }
-            }
-          }
-        ]
-      },
-      items: [
+      bodyCssCls: "grid-background",
+      buttons: [
         {
-          xtype: "listview",
-          id: "userRoleList",
-          multiSelect: false,
-          singleSelect: true,
-          hideHeaders: true,
-          frame: false,
-          store: new Ext.data.Store({
+          xtype: "combo",
+          id: "roleList",
+          valueField: "ordinal",
+          displayField: "value",
+          typeAhead: true,
+          mode: "local",
+          forceSelection: true,
+          triggerAction: "all",
+          selectOnFocus: true,
+          hiddenName: "roleListField",
+          hiddenId: "roleListHidden",
+          width: 135,
+          store: new Ext.data.ArrayStore({
             // store configs
             autoDestroy: true,
-            storeId: "userRolesStore",
+            storeId: "rolesStore",
             // reader configs
             idIndex: 1,
             fields: [
@@ -1230,19 +1209,67 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
               {name: "associatedValue", type: "auto"}
             ]
           }),
-          columns: [
-            {
-              dataIndex: "value"
-            }
-          ],
           listeners: {
-            "selectionchange": {
-              fn: this.userRoleList_changeHandler,
+            "select": {
+              fn: this.roleList_changeHandler,
+              scope: this
+            }
+          }
+        },
+        {
+          xtype: "tbbutton",
+          id: "addRoleButton",
+          text: "Add",
+          listeners: {
+            "click": {
+              fn: this.addRoleButton_clickHandler,
+              scope: this
+            }
+          }
+        },
+        {
+          xtype: "tbbutton",
+          id: "removeRoleButton",
+          text: "Remove",
+          listeners: {
+            "click": {
+              fn: this.removeRoleButton_clickHandler,
               scope: this
             }
           }
         }
-      ]
+      ],
+      hideHeaders: true,
+      frame: true,
+      store: new Ext.data.Store({
+        // store configs
+        autoDestroy: true,
+        storeId: "userRolesStore",
+        // reader configs
+        idIndex: 1,
+        fields: [
+          {name: "value", type: "string"},
+          {name: "ordinal", type: "int"},
+          {name: "associatedValue", type: "auto"}
+        ]
+      }),
+      columns: [
+        {
+          dataIndex: "value"
+        }
+      ],
+      selModel: new Ext.grid.RowSelectionModel({
+        singleSelect: true,
+        listeners: {
+          "selectionchange": {
+            fn: this.userRoleList_changeHandler,
+            scope: this
+          }
+        }
+      }),
+      view: new Ext.grid.GridView({
+        forceFit: true
+      })
     };
     Ext.apply(this, config);
     this.initialConfig = Ext.apply({}, config);
@@ -1285,8 +1312,7 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
     userRoles = userRoles || [];
 
     /* First clear out any existing roles. */
-    var roleList = this.get("userRoleList");
-    var store = roleList.getStore();
+    var store = this.getStore();
     store.removeAll(false); // true -> Don't fire the 'clear' event.
 
     // Load the rolelist with data from the role enum list.
@@ -1313,20 +1339,18 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
   },
 
   getSelectedUserRole: function() {
-    var userRoleListView = this.get("userRoleList");
-    var selectedRecords = userRoleListView.getSelectedRecords();
+    var selectedRecords = this.selModel.getSelections();
     var selectedRecord = (selectedRecords.length > 0) ? selectedRecords[0] : null;
     var retVal = (selectedRecord != null) ? selectedRecord.get("associatedValue") : null;
     return retVal;
   },
 
   setSelectedUserRoleValue: function(value/*Number*/) {
-    var userRoleListView = this.get("userRoleList");
     if (value == -1) {
-      userRoleListView.clearSelections();
+      this.selModel.clearSelections();
     }
     else {
-      userRoleListView.select(value, false);
+      this.selModel.selectRow(value, false);
     }
   },
 
@@ -1342,8 +1366,7 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.form.FormPanel, {
       control.setDisabled(flag);
     }
 
-    var userRoleList = this.get("userRoleList");
-    userRoleList.setDisabled(flag);
+//    this.setDisabled(flag);
 
     if (flag) {
       this.setSelectedRoleValue(-1);
@@ -1481,7 +1504,7 @@ Ext.reg("x-demo-role-list-panel", Puremvc.demo.view.components.RolePanel);
 /**
  * @lends Puremvc.demo.view.components.UserForm.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
+Ext.namespace("Puremvc.demo.view.components");
 Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
 
   /**
@@ -1560,8 +1583,7 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               fn: this.field_focusHandler,
               scope: this
             }
-          },
-          itemCls: "required"
+          }
         },
         {
           xtype: "textfield",
@@ -1574,8 +1596,7 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               fn: this.field_focusHandler,
               scope: this
             }
-          },
-          itemCls: "required"
+          }
         },
         {
           xtype: "textfield",
@@ -1588,8 +1609,7 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               fn: this.field_focusHandler,
               scope: this
             }
-          },
-          itemCls: "required"
+          }
         },
         {
           xtype: "combo",
@@ -1620,10 +1640,10 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               {name: "ordinal", type: "int"},
               {name: "associatedValue", type: "auto"}
             ]
-          }),
-          itemCls: "required"
+          })
         }
-      ]
+      ],
+      labelWidth: 120
     };
     Ext.apply(this, config);
     this.initialConfig = Ext.apply({}, config);
@@ -1636,6 +1656,14 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
       Puremvc.demo.view.components.UserForm.CANCEL);
 
     this.fillList();
+
+    // Add required indicator to the appropriate fields.
+    Puremvc.demo.common.Util.addRequiredToFieldLabel([
+      this.findById("uname"),
+      this.findById("password"),
+      this.findById("confirm"),
+      this.findById("department")
+    ]);
 
     // Erase any pre-existing form information.
     this.clearForm();
@@ -1753,10 +1781,18 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
     var flag = !isEnabled;
 
     var form = this.getForm();
-    var controls = ["fname", "lname", "email", "password", "confirm", "department"];
+    var controls = ["fname", "lname", "email", "uname", "password", "confirm", "department"];
     var control = null;
     for (var i = 0; i < controls.length; ++i) {
       control = form.findField(controls[i]);
+      if (control.label) {
+        Puremvc.demo.common.Util.disableLabel(control, flag);
+      }
+      else {
+        control.addListener("afterrender", function(){
+          Puremvc.demo.common.Util.disableLabel(this, flag);
+        }, control, {single:true});
+      }
       control.setDisabled(flag);
     }
 
@@ -1941,7 +1977,7 @@ Ext.reg("x-demo-user-form-panel", Puremvc.demo.view.components.UserForm);
 /**
  * @lends Puremvc.demo.view.components.UserList.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
+Ext.namespace("Puremvc.demo.view.components");
 Puremvc.demo.view.components.UserList = Ext.extend(Ext.grid.GridPanel, {
 
   /**
@@ -1967,6 +2003,7 @@ Puremvc.demo.view.components.UserList = Ext.extend(Ext.grid.GridPanel, {
   initComponent: function() {
     var config = {
       title: "Users",
+      bodyCssCls: "grid-background",
       frame: true,
       stripeRows: true,
       buttons: [
@@ -2169,7 +2206,7 @@ Ext.reg("x-demo-user-list-panel", Puremvc.demo.view.components.UserList);
  * @lends Puremvc.demo.view.ApplicationMediator.prototype
  */
 Ext.namespace('Puremvc.demo.view');
-Puremvc.demo.view.ApplicationMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Puremvc.demo.view.ApplicationMediator = Ext.extend(puremvc.Mediator, {
   /**
    * A named shortcut to the <code>Application</code> instance.  This
    * prevents us from having to reference the more
@@ -2187,7 +2224,7 @@ Puremvc.demo.view.ApplicationMediator = Ext.extend(Puremvc.patterns.Mediator, {
    *
    * @param {Puremvc.demo.view.components.Application} viewComponent the view component to register with the <code>ApplicationMediator</code>.
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    *
    * @see Puremvc.demo.view.components.Application
    *
@@ -2219,9 +2256,9 @@ Puremvc.demo.view.ApplicationMediator = Ext.extend(Puremvc.patterns.Mediator, {
    * the <code>Notification</code> is listed in the <code>listNotificationInterests()</code>
    * return value.
    *
-   * @param {Puremvc.patterns.Notification} notification the notification to act upon.
+   * @param {puremvc.Notification} notification the notification to act upon.
    */
-  handleNotification: function(notification /* Puremvc.patterns.Notification */) {
+  handleNotification: function(notification /* puremvc.Notification */) {
     switch (notification.getName()) {
       default:
         break;
@@ -2277,12 +2314,12 @@ Ext.apply(Puremvc.demo.view.ApplicationMediator,
 /**
  * @lends Puremvc.demo.view.RolePanelMediator.prototype
  */
-Ext.ns("Puremvc.demo.view");
-Puremvc.demo.view.RolePanelMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Ext.namespace("Puremvc.demo.view");
+Puremvc.demo.view.RolePanelMediator = Ext.extend(puremvc.Mediator, {
   /**
    * Constructor
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    * @constructs
    */
   constructor: function(viewComponent/*Object*/) {
@@ -2430,13 +2467,13 @@ Ext.apply(Puremvc.demo.view.RolePanelMediator, {
 /**
  * @lends Puremvc.demo.view.UserFormMediator.prototype
  */
-Ext.ns("Puremvc.demo.view");
-Puremvc.demo.view.UserFormMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Ext.namespace("Puremvc.demo.view");
+Puremvc.demo.view.UserFormMediator = Ext.extend(puremvc.Mediator, {
 
   /**
    * Constructor
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    * @constructs
    */
   constructor: function(viewComponent/*Object*/) {
@@ -2575,13 +2612,13 @@ Ext.apply(Puremvc.demo.view.UserFormMediator, {
 /**
  * @lends Puremvc.demo.view.UserListMediator.prototype
  */
-Ext.ns("Puremvc.demo.view");
-Puremvc.demo.view.UserListMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Ext.namespace("Puremvc.demo.view");
+Puremvc.demo.view.UserListMediator = Ext.extend(puremvc.Mediator, {
 
   /**
    * Constructor
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    * @constructs
    */
   constructor: function(viewComponent/*Object*/) {

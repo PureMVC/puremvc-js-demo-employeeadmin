@@ -8,13 +8,13 @@
 /**
  * @lends Puremvc.demo.view.UserListMediator.prototype
  */
-Ext.ns("Puremvc.demo.view");
-Puremvc.demo.view.UserListMediator = Ext.extend(Puremvc.patterns.Mediator, {
+Ext.namespace("Puremvc.demo.view");
+Puremvc.demo.view.UserListMediator = Ext.extend(puremvc.Mediator, {
 
   /**
    * Constructor
    *
-   * @extends Puremvc.patterns.Mediator
+   * @extends puremvc.Mediator
    * @constructs
    */
   constructor: function(viewComponent/*Object*/) {

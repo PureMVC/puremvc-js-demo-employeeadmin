@@ -8,7 +8,7 @@
 /**
  * @lends Puremvc.demo.model.RoleEnum.prototype
  */
-Ext.ns("Puremvc.demo.model");
+Ext.namespace("Puremvc.demo.model");
 Puremvc.demo.model.RoleEnum = Ext.extend(Object, {
   constructor: function(value/*String*/, ordinal/*int*/) {
     Puremvc.demo.model.RoleEnum.superclass.constructor.call(this);

@@ -8,8 +8,8 @@
 /**
  * @lends Puremvc.demo.controller.PrepViewCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.PrepViewCommand = Ext.extend(Puremvc.patterns.AsyncCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.PrepViewCommand = Ext.extend(puremvc.SimpleCommand, {
   execute: function(notification/*INotification*/) {
     // Create the Application component.
     var app = new Puremvc.demo.view.components.Application({});
@@ -17,7 +17,5 @@ Puremvc.demo.controller.PrepViewCommand = Ext.extend(Puremvc.patterns.AsyncComma
     // Register the ApplicationMediator passing the Application
     // instance to its constructor.
     this.facade.registerMediator(new Puremvc.demo.view.ApplicationMediator(app));
-
-    this.commandComplete();
   }
 });

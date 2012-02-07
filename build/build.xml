@@ -1,12 +1,12 @@
-<project name="PureMVC_ExtJS" basedir=".." default="default">
+<project name="PureMVC_ExtJS" basedir=".." default="build">
   <property name="output-dir" value="${basedir}/bin/js"/>
-  <property name="output-file" value="employee_admin_demo_extjs.js"/>
+  <property name="output-file" value="puremvc-demo-employee-admin-extjs.js"/>
   
-  <target name="default" depends="cleanup, minify"/>
+  <target name="build" depends="cleanup, concat, minify"/>
 
   <target name="cleanup" description="Remove any previously generated artifacts.">
     <delete failonerror="false">
-      <fileset dir="${output-dir}" includes="employee_admin_demo_extjs*.js"/>
+      <fileset dir="${output-dir}" includes="puremvc-demo-employee-admin-extjs*"/>
     </delete>
     <mkdir dir="${output-dir}"/>
   </target>
@@ -67,7 +67,7 @@
         preserveallsemicolons="true"
         preservestringlitterals="true"
         outputfolder="${output-dir}"
-        outputsuffix="_Mini"
+        outputsuffix=".min"
         >
       <fileset dir="${output-dir}">
         <include name="${output-file}"/>

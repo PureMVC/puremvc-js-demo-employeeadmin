@@ -8,8 +8,8 @@
 /**
  * @lends Puremvc.demo.controller.PrepViewCommand.prototype
  */
-Ext.ns("Puremvc.demo.controller");
-Puremvc.demo.controller.StartupCommand = Ext.extend(Puremvc.patterns.AsyncMacroCommand, {
+Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.StartupCommand = Ext.extend(puremvc.MacroCommand, {
   /**
    * Add the Subcommands to startup the PureMVC apparatus.
    *
@@ -17,7 +17,7 @@ Puremvc.demo.controller.StartupCommand = Ext.extend(Puremvc.patterns.AsyncMacroC
    * followed by preparation of the View (mostly the registering of
    * Mediators).
    */
-  initializeAsyncMacroCommand: function(note/*INotification*/) {
+  initializeMacroCommand: function(note/*INotification*/) {
     this.addSubCommand(Puremvc.demo.controller.PrepControllerCommand);
     this.addSubCommand(Puremvc.demo.controller.PrepModelCommand);
     this.addSubCommand(Puremvc.demo.controller.PrepViewCommand);

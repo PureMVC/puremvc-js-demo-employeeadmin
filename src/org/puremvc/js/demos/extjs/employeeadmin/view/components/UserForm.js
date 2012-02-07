@@ -7,7 +7,7 @@
 /**
  * @lends Puremvc.demo.view.components.UserForm.prototype
  */
-Ext.ns("Puremvc.demo.view.components");
+Ext.namespace("Puremvc.demo.view.components");
 Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
 
   /**
@@ -86,8 +86,7 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               fn: this.field_focusHandler,
               scope: this
             }
-          },
-          itemCls: "required"
+          }
         },
         {
           xtype: "textfield",
@@ -100,8 +99,7 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               fn: this.field_focusHandler,
               scope: this
             }
-          },
-          itemCls: "required"
+          }
         },
         {
           xtype: "textfield",
@@ -114,8 +112,7 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               fn: this.field_focusHandler,
               scope: this
             }
-          },
-          itemCls: "required"
+          }
         },
         {
           xtype: "combo",
@@ -146,10 +143,10 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
               {name: "ordinal", type: "int"},
               {name: "associatedValue", type: "auto"}
             ]
-          }),
-          itemCls: "required"
+          })
         }
-      ]
+      ],
+      labelWidth: 120
     };
     Ext.apply(this, config);
     this.initialConfig = Ext.apply({}, config);
@@ -162,6 +159,14 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
       Puremvc.demo.view.components.UserForm.CANCEL);
 
     this.fillList();
+
+    // Add required indicator to the appropriate fields.
+    Puremvc.demo.common.Util.addRequiredToFieldLabel([
+      this.findById("uname"),
+      this.findById("password"),
+      this.findById("confirm"),
+      this.findById("department")
+    ]);
 
     // Erase any pre-existing form information.
     this.clearForm();
@@ -279,10 +284,18 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
     var flag = !isEnabled;
 
     var form = this.getForm();
-    var controls = ["fname", "lname", "email", "password", "confirm", "department"];
+    var controls = ["fname", "lname", "email", "uname", "password", "confirm", "department"];
     var control = null;
     for (var i = 0; i < controls.length; ++i) {
       control = form.findField(controls[i]);
+      if (control.label) {
+        Puremvc.demo.common.Util.disableLabel(control, flag);
+      }
+      else {
+        control.addListener("afterrender", function(){
+          Puremvc.demo.common.Util.disableLabel(this, flag);
+        }, control, {single:true});
+      }
       control.setDisabled(flag);
     }
 
