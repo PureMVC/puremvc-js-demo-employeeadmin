@@ -48,6 +48,23 @@ Puremvc.demo.common.Util = {
         }
       }, item);
     }, field);
+  },
+
+  /**
+   * Shared routine to enable or disable the label of a form control.
+   *
+   * @param control the control whose label is to be disabled/enabled.
+   * @param flag true to disable, false to enable.
+   */
+  disableLabel: function(control, flag) {
+    if (control.label) {
+      if (flag) {
+        control.label.addClass("x-item-disabled");
+      }
+      else {
+        control.label.removeClass("x-item-disabled");
+      }
+    }
   }
 };
 

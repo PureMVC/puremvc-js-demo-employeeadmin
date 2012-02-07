@@ -7,7 +7,9 @@ this.registerCommand(Puremvc.demo.ApplicationFacade.STARTUP,Puremvc.demo.control
 Puremvc.demo.common.Util={alert:function(message,title){Ext.Msg.show({title:title,msg:message,buttons:Ext.MessageBox.OK,icon:Ext.MessageBox.INFO});
 },addRequiredToFieldLabel:function(field){var fields=[].concat(field);Ext.each(fields,function(item,index,allItems){item.mon(item,"afterrender",function(){var formItem=this.el.up(".x-form-item",10);
 if(formItem){var label=formItem.child(".x-form-item-label");if(label){Ext.get(label).addClass("required");
-}}},item);},field);}};Ext.namespace("Puremvc.demo.controller");Puremvc.demo.controller.AddRoleResultCommand=Ext.extend(puremvc.SimpleCommand,{execute:function(notification){var result=notification.getBody();
+}}},item);},field);},disableLabel:function(control,flag){if(control.label){if(flag){control.label.addClass("x-item-disabled");
+}else{control.label.removeClass("x-item-disabled");}}}};Ext.namespace("Puremvc.demo.controller");
+Puremvc.demo.controller.AddRoleResultCommand=Ext.extend(puremvc.SimpleCommand,{execute:function(notification){var result=notification.getBody();
 if(result===false){Puremvc.demo.common.Util.alert("Role already exists for this user!","Add User Role");
 }}});Ext.namespace("Puremvc.demo.controller");Puremvc.demo.controller.DeleteUserCommand=Ext.extend(puremvc.SimpleCommand,{execute:function(notification){var user=notification.getBody();
 var userProxy=this.facade.retrieveProxy(Puremvc.demo.model.UserProxy.NAME);userProxy.deleteItem(user);
@@ -106,8 +108,8 @@ Puremvc.demo.view.components.UserForm=Ext.extend(Ext.form.FormPanel,{user:null,m
 this.user=null;this.mode=null;},initComponent:function(){var config={title:"User Profile",buttons:[{xtype:"tbbutton",id:"submitButton",text:"Add User",handler:this.submit_clickHandler.createDelegate(this)},{xtype:"tbbutton",id:"cancelButton",text:"Cancel",handler:this.cancel_clickHandler.createDelegate(this)}],defaults:{width:135},items:[{xtype:"textfield",id:"fname",fieldLabel:"First Name",msgTarget:"side"},{xtype:"textfield",id:"lname",fieldLabel:"Last Name",msgTarget:"side"},{xtype:"textfield",id:"email",fieldLabel:"Email",msgTarget:"side",vtype:"email"},{xtype:"textfield",id:"uname",fieldLabel:"User Name",msgTarget:"side",listeners:{"focus":{fn:this.field_focusHandler,scope:this}}},{xtype:"textfield",id:"password",fieldLabel:"Password",inputType:"password",msgTarget:"side",listeners:{"focus":{fn:this.field_focusHandler,scope:this}}},{xtype:"textfield",id:"confirm",fieldLabel:"Confirm Password",inputType:"password",msgTarget:"side",listeners:{"focus":{fn:this.field_focusHandler,scope:this}}},{xtype:"combo",id:"department",fieldLabel:"Department",valueField:"ordinal",displayField:"value",typeAhead:true,mode:"local",forceSelection:true,triggerAction:"all",selectOnFocus:true,msgTarget:"side",listeners:{"focus":{fn:this.field_focusHandler,scope:this}},store:new Ext.data.Store({autoDestroy:true,storeId:"deptStore",idIndex:1,fields:[{name:"value",type:"string"},{name:"ordinal",type:"int"},{name:"associatedValue",type:"auto"}]})}],labelWidth:120};
 Ext.apply(this,config);this.initialConfig=Ext.apply({},config);Puremvc.demo.view.components.UserForm.superclass.initComponent.call(this);
 this.addEvents(Puremvc.demo.view.components.UserForm.ADD,Puremvc.demo.view.components.UserForm.UPDATE,Puremvc.demo.view.components.UserForm.CANCEL);
-this.fillList();this.clearForm();this.setEnabled(false);Puremvc.demo.common.Util.addRequiredToFieldLabel([this.findById("uname"),this.findById("password"),this.findById("confirm"),this.findById("department")]);
-},getSelectedDept:function(){var deptListCombo=this.getForm().findField("department");
+this.fillList();Puremvc.demo.common.Util.addRequiredToFieldLabel([this.findById("uname"),this.findById("password"),this.findById("confirm"),this.findById("department")]);
+this.clearForm();this.setEnabled(false);},getSelectedDept:function(){var deptListCombo=this.getForm().findField("department");
 var store=deptListCombo.getStore();var value=deptListCombo.getValue();var selectedRecord=store.getById(value);
 var retVal=(selectedRecord!=null)?selectedRecord.get("associatedValue"):null;return retVal;
 },setSelectedDeptValue:function(value){var deptListCombo=this.getForm().findField("department");
@@ -126,10 +128,12 @@ this.user.fname=form.findField("fname").getValue();this.user.lname=form.findFiel
 this.user.email=form.findField("email").getValue();this.user.password=form.findField("password").getValue();
 this.user.department=this.getSelectedDept();},clearForm:function(){var form=this.getForm();
 form.reset();form.findField("department").setValue(-1);form.clearInvalid();},setEnabled:function(isEnabled){var flag=!isEnabled;
-var form=this.getForm();var controls=["fname","lname","email","password","confirm","department"];
+var form=this.getForm();var controls=["fname","lname","email","uname","password","confirm","department"];
 var control=null;for(var i=0;i<controls.length;++i){control=form.findField(controls[i]);
-control.setDisabled(flag);}controls=["submitButton","cancelButton"];for(var j=0;j<controls.length;
-++j){control=this.getFooterToolbar().get(controls[j]);control.setDisabled(flag);}form.findField("uname").setDisabled(!(isEnabled&&this.mode==Puremvc.demo.view.components.UserForm.MODE_ADD));
+if(control.label){Puremvc.demo.common.Util.disableLabel(control,flag);}else{control.addListener("afterrender",function(){Puremvc.demo.common.Util.disableLabel(this,flag);
+},control,{single:true});}control.setDisabled(flag);}controls=["submitButton","cancelButton"];
+for(var j=0;j<controls.length;++j){control=this.getFooterToolbar().get(controls[j]);
+control.setDisabled(flag);}form.findField("uname").setDisabled(!(isEnabled&&this.mode==Puremvc.demo.view.components.UserForm.MODE_ADD));
 },setMode:function(mode){this.mode=mode;var submitButton=this.getFooterToolbar().get("submitButton");
 switch(mode){case Puremvc.demo.view.components.UserForm.MODE_ADD:submitButton.setText("Add User");
 break;case Puremvc.demo.view.components.UserForm.MODE_EDIT:submitButton.setText("Update Profile");

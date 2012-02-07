@@ -227,6 +227,23 @@ Puremvc.demo.common.Util = {
         }
       }, item);
     }, field);
+  },
+
+  /**
+   * Shared routine to enable or disable the label of a form control.
+   *
+   * @param control the control whose label is to be disabled/enabled.
+   * @param flag true to disable, false to enable.
+   */
+  disableLabel: function(control, flag) {
+    if (control.label) {
+      if (flag) {
+        control.label.addClass("x-item-disabled");
+      }
+      else {
+        control.label.removeClass("x-item-disabled");
+      }
+    }
   }
 };
 
@@ -1648,10 +1665,6 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
 
     this.fillList();
 
-    // Erase any pre-existing form information.
-    this.clearForm();
-    this.setEnabled(false);
-
     // Add required indicator to the appropriate fields.
     Puremvc.demo.common.Util.addRequiredToFieldLabel([
       this.findById("uname"),
@@ -1659,6 +1672,10 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
       this.findById("confirm"),
       this.findById("department")
     ]);
+
+    // Erase any pre-existing form information.
+    this.clearForm();
+    this.setEnabled(false);
   },
 
   getSelectedDept: function() {
@@ -1772,10 +1789,18 @@ Puremvc.demo.view.components.UserForm = Ext.extend(Ext.form.FormPanel, {
     var flag = !isEnabled;
 
     var form = this.getForm();
-    var controls = ["fname", "lname", "email", "password", "confirm", "department"];
+    var controls = ["fname", "lname", "email", "uname", "password", "confirm", "department"];
     var control = null;
     for (var i = 0; i < controls.length; ++i) {
       control = form.findField(controls[i]);
+      if (control.label) {
+        Puremvc.demo.common.Util.disableLabel(control, flag);
+      }
+      else {
+        control.addListener("afterrender", function(){
+          Puremvc.demo.common.Util.disableLabel(this, flag);
+        }, control, {single:true});
+      }
       control.setDisabled(flag);
     }
 
