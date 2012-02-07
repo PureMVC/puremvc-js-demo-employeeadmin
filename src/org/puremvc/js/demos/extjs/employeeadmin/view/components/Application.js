@@ -25,7 +25,6 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
         type: "fit"
       },
       defaults: {
-        border: false,
         frame: true
       },
       items: [
@@ -38,7 +37,6 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
             align: "center",
             pack: "start"
           },
-          hideBorders: true,
           defaults: {
             frame: false
           },
@@ -58,7 +56,6 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
               xtype: "x-demo-user-list-panel",
               id: "userList",
               width: 650,
-              height: 250,
               flex: 1
             },
             {
@@ -70,7 +67,6 @@ Puremvc.demo.view.components.Application = Ext.extend(Ext.Viewport, {
                 pack: "start"
               },
               width: 650,
-              height: 300,
               flex: 1,
               defaults: {
                 frame: true

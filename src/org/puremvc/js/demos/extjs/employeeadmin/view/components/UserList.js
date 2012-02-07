@@ -33,7 +33,7 @@ Puremvc.demo.view.components.UserList = Ext.extend(Ext.grid.GridPanel, {
   initComponent: function() {
     var config = {
       title: "Users",
-      bodyCls: "grid-background",
+      bodyCssCls: "grid-background",
       frame: true,
       stripeRows: true,
       buttons: [

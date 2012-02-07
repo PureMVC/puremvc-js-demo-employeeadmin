@@ -46,66 +46,62 @@ Puremvc.demo.view.components.RolePanel = Ext.extend(Ext.grid.GridPanel, {
     var config = {
       title: "User Roles",
       bodyCssCls: "grid-background",
-      fbar: {
-        buttonAlign: "right",
-        items: [
-          {
-            xtype: "combo",
-            id: "roleList",
-            valueField: "ordinal",
-            displayField: "value",
-            typeAhead: true,
-            mode: "local",
-            forceSelection: true,
-            triggerAction: "all",
-            selectOnFocus: true,
-            hiddenName: "roleListField",
-            hiddenId: "roleListHidden",
-            width: 135,
-            store: new Ext.data.ArrayStore({
-              // store configs
-              autoDestroy: true,
-              storeId: "rolesStore",
-              // reader configs
-              idIndex: 1,
-              fields: [
-                {name: "value", type: "string"},
-                {name: "ordinal", type: "int"},
-                {name: "associatedValue", type: "auto"}
-              ]
-            }),
-            listeners: {
-              "select": {
-                fn: this.roleList_changeHandler,
-                scope: this
-              }
-            }
-          },
-          {
-            xtype: "tbbutton",
-            id: "addRoleButton",
-            text: "Add",
-            listeners: {
-              "click": {
-                fn: this.addRoleButton_clickHandler,
-                scope: this
-              }
-            }
-          },
-          {xtype: "tbspacer"},
-          {
-            xtype: "tbbutton",
-            id: "removeRoleButton",
-            text: "Remove",
-            listeners: {
-              "click": {
-                fn: this.removeRoleButton_clickHandler,
-                scope: this
-              }
+      buttons: [
+        {
+          xtype: "combo",
+          id: "roleList",
+          valueField: "ordinal",
+          displayField: "value",
+          typeAhead: true,
+          mode: "local",
+          forceSelection: true,
+          triggerAction: "all",
+          selectOnFocus: true,
+          hiddenName: "roleListField",
+          hiddenId: "roleListHidden",
+          width: 135,
+          store: new Ext.data.ArrayStore({
+            // store configs
+            autoDestroy: true,
+            storeId: "rolesStore",
+            // reader configs
+            idIndex: 1,
+            fields: [
+              {name: "value", type: "string"},
+              {name: "ordinal", type: "int"},
+              {name: "associatedValue", type: "auto"}
+            ]
+          }),
+          listeners: {
+            "select": {
+              fn: this.roleList_changeHandler,
+              scope: this
             }
           }
-        ]
-      },
+        },
+        {
+          xtype: "tbbutton",
+          id: "addRoleButton",
+          text: "Add",
+          listeners: {
+            "click": {
+              fn: this.addRoleButton_clickHandler,
+              scope: this
+            }
+          }
+        },
+        {
+          xtype: "tbbutton",
+          id: "removeRoleButton",
+          text: "Remove",
+          listeners: {
+            "click": {
+              fn: this.removeRoleButton_clickHandler,
+              scope: this
+            }
+          }
+        }
+      ],
       hideHeaders: true,
       frame: true,
       store: new Ext.data.Store({
