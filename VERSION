@@ -1,15 +1,14 @@
-PureMVC Javascript ExtJS4 Demo - Employee Admin
-By Tony DeFusco <tony.defusco@puremvc.org>
-Copyright(c) 2006-12 Tony DeFusco, Some rights reserved.
+PureMVC Javascript ExtJS4 Demo - Employee Admin (Ported)
 --------------------------------------------------------------------------
 Release Date: 01/20/2012
     Platform: JavaScript 1.5, Sencha ExtJS 4
+     Version: 1
+       Minor: 1
       Author: Tony DeFusco <tony.defusco@puremvc.org>
-     License: Creative Commons Attribution 3.0 United States License
 --------------------------------------------------------------------------
-1.0 - First public release.
 1.1 - Removed dependency on PureMVC JS ExtJS 3 adapter library.
       Removed usage of AsyncCommand library.  
       Modified the code to improve the visual appeal.
       Added ext-all.js, which must be present when deployed on the web.
 
+1.0 - First public release.
