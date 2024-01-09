@@ -1,14 +1,10 @@
-PureMVC Javascript ExtJS4 Demo - Employee Admin (Ported)
+PureMVC Javascript ECMA Demo - Employee Admin
 --------------------------------------------------------------------------
-Release Date: 01/20/2012
-    Platform: JavaScript 1.5, Sencha ExtJS 4
-     Version: 1
-       Minor: 1
-      Author: Tony DeFusco <tony.defusco@puremvc.org>
+Release Date: 12/26/23
+    Platform: JavaScript, ECMA 6
+     Version: 2
+    Revision: 0
+       Minor: 0
+      Authors: Saad Shams <saad.shams@puremvc.org>
 --------------------------------------------------------------------------
-1.1 - Removed dependency on PureMVC JS ExtJS 3 adapter library.
-      Removed usage of AsyncCommand library.  
-      Modified the code to improve the visual appeal.
-      Added ext-all.js, which must be present when deployed on the web.
-
-1.0 - First public release.
+2.0 - ECMA based implementation of the Employee Admin Responsive Demo

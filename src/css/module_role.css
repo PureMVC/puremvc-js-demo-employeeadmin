@@ -1,0 +1,69 @@
+@charset "UTF-8";
+#userRole .wrapper {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    padding: 0 10px;
+    border-radius: 10px;
+}
+
+#userRole #screen {
+    visibility: hidden;
+}
+
+#userRole header {}
+
+#userRole header button {
+    display: none;
+}
+
+#userRole main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: auto;
+}
+#userRole footer {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 8px;
+
+    width: 100%;
+    padding: 10px;
+    margin-top: auto;
+}
+#userRole footer select {
+    flex: 2;
+}
+
+@media screen and (max-width: 767px) {  /* Small screens (phones) */
+   #userRole #screen {
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background-color: rgba(128, 128, 128, 0.5);
+       border-radius: 5px;
+       visibility: visible;
+       z-index: -10;
+   }
+
+    #userRole .wrapper {
+        margin-top: 30px;
+        background-color: #FFFFFF;
+    }
+
+    #userRole header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    #userRole header button {
+        display: inline-block;
+        height: 30px;
+        padding: 0 7px;
+        margin-right: 10px;
+    }
+}

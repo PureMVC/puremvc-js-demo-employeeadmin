@@ -1,0 +1,40 @@
+{
+  "name": "puremvc-js-demo-employeeadmin",
+  "version": "2.0.0",
+  "description": "PureMVC JavaScript Demo: Employee Admin",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --c build/vite.js",
+    "build": "vite build --c build/vite.js",
+    "preview": "vite preview --c build/vite.js",
+    "test": "npm run test:unit",
+    "test:unit": "mocha \"test/**/*.js\"",
+    "test:e2e": "npx playwright test --config build/playwright.js",
+    "test:all": "npm run test:safari && npm run test:chrome && npm run test:firefox",
+    "test:safari": "npx playwright test --project=webkit --headed --config build/playwright.js",
+    "test:chrome": "npx playwright test --project=chromium --headed --config build/playwright.js",
+    "test:firefox": "npx playwright test --project=firefox --headed --config build/playwright.js",
+    "test:codegen": "npx playwright codegen http://localhost:5173/",
+    "test:report": "npx playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PureMVC/puremvc-js-multicore-framework.git"
+  },
+  "author": "Saad Shams <saad.shams@puremvc.org>",
+  "license": "CC-BY-3.0",
+  "bugs": {
+    "url": "https://github.com/PureMVC/puremvc-js-demo-employeeadmin/issues"
+  },
+  "homepage": "https://puremvc.org",
+  "devDependencies": {
+    "@playwright/test": "^1.40.1",
+    "@types/node": "^20.10.5",
+    "autoprefixer": "^10.4.16",
+    "vite": "^5.0.10"
+  },
+  "browserslist": [
+    "defaults",
+    "cover 99.5%"
+  ]
+}

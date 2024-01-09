@@ -1,0 +1,82 @@
+@charset "UTF-8";
+#userList .wrapper {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    padding: 0 10px;
+    border-radius: 10px;
+}
+#userList header {}
+
+#userList main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+#userList main ul { /* table */
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+#userList main ul li:first-child { /* header row (sticky) */
+    display: flex;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+#userList main ul li:first-child span { /* header column */
+    flex: 1;
+}
+#userList main ul li label { /* row */
+    display: flex;
+}
+#userList main ul li label span { /* column */
+    flex: 1;
+    padding: 10px;
+}
+#userList main ul li input { /* hide radio button */
+    display: none;
+}
+
+#userList footer {
+    display: flex;
+    justify-content: flex-end;
+    column-gap: 8px;
+
+    width: 100%;
+    padding: 10px;
+    margin-top: auto;
+}
+@media screen and (max-width: 767px) {  /* Small screens (phones) */
+    #userList main ul li label span:nth-child(n+2),
+    #userList main ul li:first-child span:nth-child(n+2) { /* Hide all columns starting from the 2nd column */
+        display: none;
+    }
+    #userList main ul li {
+        position: relative;
+    }
+    #userList main ul > :not(:first-child)::after {
+        content: '▶';
+        position: absolute;
+        top: 50%;
+        transform: translate3d(0, -50%, 0);
+        right: 10px;
+        cursor: pointer;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) { /* Medium screens (tablets) */
+    #userList main ul li span:first-child {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 1024px) { /* large screens (desktops) */
+    #userList main ul li span:first-child {
+        display: none;
+    }
+}
