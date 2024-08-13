@@ -15,6 +15,18 @@ This demo illustrates techniques for performing routine client-side maintenance 
 * [plainJS](https://plainjs.com/javascript/)
 * Vanilla JS Animations using [Robert Penner's Easing Functions](http://robertpenner.com/easing/) | [Cheat Sheet](https://easings.net/)
 
+## Semantic HTML Components
+
+```html
+<section id="moduleName">
+  <div class="wrapper">
+    <header></header>
+    <main></main>
+    <footer></footer>
+  </div>
+</section>
+```
+
 ## CSS Property Order Reference
 
 ### Layout

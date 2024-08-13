@@ -8,13 +8,13 @@ export class Role {
     static GEN_LEDGER = new Role(5, "General Ledger");
     static PAYROLL = new Role(6, "Payroll");
     static INVENTORY = new Role(7, "Inventory");
-    static PRODUCTION = new Role(7, "Production");
-    static QUALITY_CTL = new Role(8, "Quality Control");
-    static SALES = new Role(9, "Sales");
-    static ORDERS = new Role(10, "Orders");
-    static CUSTOMERS = new Role(11, "Customers");
-    static SHIPPING = new Role(12, "Shipping");
-    static RETURNS = new Role(13, "Returns");
+    static PRODUCTION = new Role(8, "Production");
+    static QUALITY_CTL = new Role(9, "Quality Control");
+    static SALES = new Role(10, "Sales");
+    static ORDERS = new Role(11, "Orders");
+    static CUSTOMERS = new Role(12, "Customers");
+    static SHIPPING = new Role(13, "Shipping");
+    static RETURNS = new Role(14, "Returns");
 
     /**
      * @param id {int}

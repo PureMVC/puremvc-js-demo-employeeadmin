@@ -54,7 +54,6 @@ export class UserRole {
     /** @param roles {Role[]} */
     saveAll(roles) { // add roles
         if (roles.length) this.roleSet.add(...roles);
-        console.log(this.roleSet);
         document.getElementById("userRole_list").innerHTML =
             roles.map(role => `<li data-id="${role.id.toString()}">${role.name}</li>`).join("");
     }
@@ -64,8 +63,6 @@ export class UserRole {
         let option = dropdown.options[dropdown.selectedIndex];
         let role = Role.comboList.find((role) => role.id === parseInt(option.value));
 
-        console.log("adding");
-        console.log(this.roleSet);
         if (this.roleSet.has(role)) return;
 
         this.roleSet.add(role);
@@ -78,8 +75,6 @@ export class UserRole {
         let option = dropdown.options[dropdown.selectedIndex];
         let role = Role.comboList.find((role) => role.id === parseInt(option.value));
 
-        console.log('removing')
-        console.log(this.roleSet);
         if (!this.roleSet.has(role)) return;
 
         this.roleSet.delete(role);
