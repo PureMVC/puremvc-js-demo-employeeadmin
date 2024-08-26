@@ -1,5 +1,11 @@
 @charset "UTF-8";
+/**
+  app.css
+  PureMVC JS Demo - EmployeeAdmin
 
+  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
+  Your reuse is governed by the BSD 3-Clause License
+*/
 @import url("base.css");
 @import url("layout.css");
 @import url("module_user.css");

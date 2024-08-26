@@ -36,5 +36,8 @@
   "browserslist": [
     "defaults",
     "cover 99.5%"
-  ]
+  ],
+  "dependencies": {
+    "@puremvc/puremvc-js-multicore-framework": "2.0.7"
+  }
 }

@@ -1,3 +1,11 @@
+//
+//  Role.js
+//  PureMVC JS Demo - EmployeeAdmin
+//
+//  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
+//  Your reuse is governed by the BSD 3-Clause License
+//
+
 export class Role {
 
     static NONE_SELECTED = new Role(0, "--None Selected---");

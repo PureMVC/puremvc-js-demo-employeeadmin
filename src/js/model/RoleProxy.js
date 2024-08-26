@@ -1,6 +1,14 @@
-import {puremvc} from "../api/puremvc-2.0.0.js"
+//
+//  RoleProxy.js
+//  PureMVC JS Demo - EmployeeAdmin
+//
+//  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
+//  Your reuse is governed by the BSD 3-Clause License
+//
 
-export class RoleProxy extends puremvc.Proxy {
+import {Proxy} from "@puremvc/puremvc-js-multicore-framework";
+
+export class RoleProxy extends Proxy {
 
     static get NAME() { return "RoleProxy" }
 

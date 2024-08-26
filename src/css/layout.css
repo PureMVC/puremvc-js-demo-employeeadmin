@@ -1,4 +1,11 @@
 @charset "UTF-8";
+/**
+  layout.css
+  PureMVC JS Demo - EmployeeAdmin
+
+  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
+  Your reuse is governed by the BSD 3-Clause License
+*/
 html {
     height: 100%;
 }

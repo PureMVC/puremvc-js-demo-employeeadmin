@@ -1,7 +1,15 @@
-import {puremvc} from "./api/puremvc-2.0.0.js"
+//
+//  ApplicationFacade.js
+//  PureMVC JS Demo - EmployeeAdmin
+//
+//  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
+//  Your reuse is governed by the BSD 3-Clause License
+//
+
+import {Facade} from "@puremvc/puremvc-js-multicore-framework";
 import {StartupCommand} from "./controller/StartupCommand.js";
 
-export class ApplicationFacade extends puremvc.Facade {
+export class ApplicationFacade extends Facade {
 
     static get STARTUP () { return "startup" }
 
@@ -29,7 +37,7 @@ export class ApplicationFacade extends puremvc.Facade {
     }
 
     static getInstance(key) {
-        return puremvc.Facade.getInstance(key, k => new ApplicationFacade(k));
+        return Facade.getInstance(key, k => new ApplicationFacade(k));
     }
 
     startup(app) {

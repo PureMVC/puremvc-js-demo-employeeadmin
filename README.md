@@ -15,6 +15,12 @@ This demo illustrates techniques for performing routine client-side maintenance 
 * [plainJS](https://plainjs.com/javascript/)
 * Vanilla JS Animations using [Robert Penner's Easing Functions](http://robertpenner.com/easing/) | [Cheat Sheet](https://easings.net/)
 
+## Installation
+```shell
+npm run build
+npm run preview
+```
+
 ## Semantic HTML Components
 
 ```html

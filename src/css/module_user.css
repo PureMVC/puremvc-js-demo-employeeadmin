@@ -1,4 +1,11 @@
 @charset "UTF-8";
+/**
+  module_user.css
+  PureMVC JS Demo - EmployeeAdmin
+
+  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
+  Your reuse is governed by the BSD 3-Clause License
+*/
 #userList .wrapper {
     display: flex;
     flex-direction: column;
@@ -51,6 +58,7 @@
     padding: 10px;
     margin-top: auto;
 }
+
 @media screen and (max-width: 767px) {  /* Small screens (phones) */
     #userList main ul li label span:nth-child(n+2),
     #userList main ul li:first-child span:nth-child(n+2) { /* Hide all columns starting from the 2nd column */

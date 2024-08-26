@@ -1,9 +1,17 @@
-import {puremvc} from "../api/puremvc-2.0.0.js"
+//
+//  UserListMediator.js
+//  PureMVC JS Demo - EmployeeAdmin
+//
+//  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
+//  Your reuse is governed by the BSD 3-Clause License
+//
+
+import {Mediator} from "@puremvc/puremvc-js-multicore-framework";
 import {UserList} from "./components/UserList.js";
 import {UserProxy} from "../model/UserProxy.js";
 import {ApplicationFacade} from "../ApplicationFacade.js";
 
-export class UserListMediator extends puremvc.Mediator {
+export class UserListMediator extends Mediator {
 
     static get NAME() { return "UserListMediator" }
 
@@ -49,7 +57,7 @@ export class UserListMediator extends puremvc.Mediator {
         ];
     }
 
-    /** @param notification {puremvc.Notification} */
+    /** @param notification {Notification} */
     handleNotification(notification) {
         switch (notification.name) {
             case ApplicationFacade.USER_ADDED:

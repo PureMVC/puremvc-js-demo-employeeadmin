@@ -1,9 +1,17 @@
-import {puremvc} from "../api/puremvc-2.0.0.js"
+//
+//  UserFormMediator.js
+//  PureMVC JS Demo - EmployeeAdmin
+//
+//  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
+//  Your reuse is governed by the BSD 3-Clause License
+//
+
+import {Mediator} from "@puremvc/puremvc-js-multicore-framework";
 import {UserForm} from "./components/UserForm.js";
 import {ApplicationFacade} from "../ApplicationFacade.js";
 import {UserProxy} from "../model/UserProxy.js";
 
-export class UserFormMediator extends puremvc.Mediator {
+export class UserFormMediator extends Mediator {
 
     static get NAME() { return "UserFormMediator" }
 
@@ -55,7 +63,7 @@ export class UserFormMediator extends puremvc.Mediator {
         ];
     }
 
-    /** @param notification {puremvc.Notification} */
+    /** @param notification {Notification} */
     handleNotification(notification) {
         switch (notification.name) {
             case ApplicationFacade.NEW_USER:

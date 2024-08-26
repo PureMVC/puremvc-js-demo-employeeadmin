@@ -1,9 +1,17 @@
-import {puremvc} from "../api/puremvc-2.0.0.js"
+//
+//  UserRoleMediator.js
+//  PureMVC JS Demo - EmployeeAdmin
+//
+//  Copyright(c) 2023 Saad Shams <saad.shams@puremvc.org>
+//  Your reuse is governed by the BSD 3-Clause License
+//
+
+import {Mediator} from "@puremvc/puremvc-js-multicore-framework";
 import {UserRole} from "./components/UserRole.js";
 import {ApplicationFacade} from "../ApplicationFacade.js";
 import {RoleProxy} from "../model/RoleProxy.js";
 
-export class UserRoleMediator extends puremvc.Mediator {
+export class UserRoleMediator extends Mediator {
 
     static get NAME() { return "UserRoleMediator" }
 
@@ -44,7 +52,7 @@ export class UserRoleMediator extends puremvc.Mediator {
         ];
     }
 
-    /**  @param notification {puremvc.Notification} */
+    /**  @param notification {Notification} */
     handleNotification(notification) {
         switch (notification.name) {
             case ApplicationFacade.NEW_USER:
